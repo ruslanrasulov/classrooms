@@ -29,6 +29,9 @@ const config = {
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin()
     ],
+    resolve: {
+        extensions: ['.js', '.jsx']
+    },
     devServer: {
         historyApiFallback: true,
         contentBase: outputPath,

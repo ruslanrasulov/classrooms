@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "start-server": "webpack-dev-server"
+    "start": "webpack-dev-server"
   },
   "author": "Ruslan Rasulov",
   "license": "ISC",
@@ -21,6 +21,10 @@
   },
   "dependencies": {
     "react": "^16.5.1",
-    "react-dom": "^16.5.1"
+    "react-dom": "^16.5.1",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0"
   }
 }
