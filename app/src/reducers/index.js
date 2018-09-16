@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
-import auditories from './auditoryReducer';
+import auditories from './auditoriumReducer';
 import housings from './housingReducer';
+import { reducer as formReducer } from 'redux-form';
 
 const rootReducer = combineReducers({
     auditories,
-    housings
+    housings,
+    form: formReducer
 });
 
 export default rootReducer;

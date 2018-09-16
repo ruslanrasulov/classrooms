@@ -1,7 +1,7 @@
 import initialState from './initialState';
-import * as actionTypes from './../actions/actionTypes';
+import * as actionTypes from '../actions/actionTypes';
 
-const auditoryReducer = (state = initialState.auditories, action) => {
+const auditoriumReducer = (state = initialState.auditories, action) => {
     const actionType = action.Type;
 
     switch (actionType) {
@@ -11,4 +11,4 @@ const auditoryReducer = (state = initialState.auditories, action) => {
     }
 };
 
-export default auditoryReducer;
+export default auditoriumReducer;
