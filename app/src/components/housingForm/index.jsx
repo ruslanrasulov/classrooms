@@ -1,19 +1,22 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { Multiselect } from 'react-widgets';
-import 'react-widgets/dist/css/react-widgets.css';
+import Select from 'react-select';
 
-const MultiselectWrapper = props => {
+const SelectInput = (props) => {
+    const { input } = props;
+    
     return (
-        <Multiselect 
-            data={[{ id: 1, label: '123'}, { id: 2, label: '234' }]} 
-            
-            {...props} />
-    )
+        <Select 
+            isMulti
+            {...input}
+            {...props}
+            onChange={(value) => {input.onChange(value)}}
+            onBlur={() => { }} /> 
+    );
 };
 
-const HousingForm = ({ handleSubmit, pristine, submitting, onSubmit, ...props }) => (
-    <form onSubmit={handleSubmit((values) => { console.debug(values); })}>
+const HousingForm = ({ handleSubmit, pristine, submitting, onSubmit }) => (
+    <form onSubmit={handleSubmit((values) => { return { housingAuditoriums: values.housingAuditoriums.map(h => h.value), ...values } })}>
         <div>
             <label htmlFor="housing-number">Housing number:</label>
             <Field name="housingNumber" component="input" type="text" />
@@ -23,11 +26,8 @@ const HousingForm = ({ handleSubmit, pristine, submitting, onSubmit, ...props })
             <label htmlFor="housing-auditoriums">Audiroriums</label>
             <Field 
                 name="housingAuditoriums"  
-                component={Multiselect}  
-                defaultValue={[]}
-                data={[{ id: 1, label: '123'}, { id: 2, label: '234' }]} 
-                valueField="id"
-                textField="label" />
+                component={SelectInput}
+                options={[{ value: 1, label: '123'}, { value: 2, label: '234' }]} />
         </div>
         <button type="submit" disabled={pristine || submitting}>Submit</button>
     </form>
