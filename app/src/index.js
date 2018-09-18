@@ -15,12 +15,11 @@ const Root =
         <BrowserRouter>
             <Switch>
                 <Route path="/auditoriums/edit/" component={AuditoriumForm} />
-                <Route path="/housings/edit/:id?" component={HousingForm} />
+                <Route path="/housings/edit/:id?" render={props => <HousingForm {...props} onSubmit={(values) => console.log(values)} />} />
                 <Route path="/housings" component={HousingList} />
                 <Route path="/" component={App} />
             </Switch>
         </BrowserRouter>
-        {/* <AuditoriumForm onSubmit={(values) => { console.log(values); }}/> */}
     </Provider>
 
 ReactDOM.render(
