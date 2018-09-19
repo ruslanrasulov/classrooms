@@ -19,6 +19,10 @@ const config = {
                 use: ['babel-loader']
             },
             {
+                test: /\.(scss|sass)/,
+                loader: 'style-loader!css-loader!sass-loader'
+            },
+            {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader'],
             },
