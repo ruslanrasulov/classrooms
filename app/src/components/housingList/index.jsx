@@ -18,7 +18,8 @@ class HousingList extends Component {
                         <li key={housing.number} className="housing-list__item">
                             <span className="housing-list__item__name">Housing number: {housing.number}</span>
                             <div className="housing-list__item__buttons">
-                                <Link to="/" className="housing-list__item__button">Detailed info</Link>
+                                <Link to={`/housings/${housing.number}/auditoriums`} className="housing-list__item__button">Detailed info</Link>
+                                <Link to={`/housings/edit/${housing.number}`} className="housing-list__item__button">Edit</Link>
                                 <button className="housing-list__item__button" type="button" onClick={() => removeHousing(housing.id)}>Remove</button>
                             </div>
                         </li>

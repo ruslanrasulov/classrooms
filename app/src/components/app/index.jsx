@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import AuditoriumForm from './../auditoriumForm';
 import HousingForm from './../housingForm';
 import HousingList from './../housingList';
+import AuditoriumsList from './../auditoriumsList';
 import 'reset-css';
 import './_styles.scss';
 
@@ -19,9 +20,11 @@ export default (props) => {
             <Header />
             <main className="container">
                 <Switch>
-                    <Route path="/auditoriums/edit/" exact component={AuditoriumForm} />
+                    <Route path="/auditoriums/add" exact component={AuditoriumForm} />
+                    <Route path="/auditoriums/edit/:id" exact component={AuditoriumForm} />
                     <Route path="/housings/add" exact component={HousingForm} />
-                    <Route path="/housings/edit/:id?" exact component={HousingForm} />} />
+                    <Route path="/housings/edit/:id" exact component={HousingForm} />} />
+                    <Route path="/housings/:id/auditoriums" exact component={AuditoriumsList} />
                     <Route path="/housings" exact component={HousingList} />
                     <Redirect to="/" />
                 </Switch>

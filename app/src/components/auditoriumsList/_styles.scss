@@ -1,0 +1,41 @@
+%clearfix {
+    display: block;
+    content: ' ';
+    clear: both;
+}
+
+
+.auditoriums {
+    &__nav {
+        &::after {
+            @extend %clearfix;
+        }
+    }
+
+    &__add-button {
+        display: block;
+        border-radius: 5px;
+        padding: 5px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        float: right;
+        background-color: #4eb243;
+
+        &:hover {
+            background-color: #19ff00;
+        }
+    }
+
+    &__list {
+        width: 100%;
+
+        th {
+            border: 1px solid #000000;
+            padding: 10px;
+        }
+
+        tbody tr:hover {
+            background-color: #e5e5e5;
+        }
+    }
+}
