@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Header from './../header';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import AuditoriumForm from './../auditoriumForm';
 import HousingForm from './../housingForm';
 import HousingList from './../housingList';
@@ -18,13 +17,12 @@ export default (props) => {
     return (
         <main>
             <Header />
-            <BrowserRouter>
-                <Switch>
-                    <Route path="/auditoriums/edit/" component={AuditoriumForm} />
-                    <Route path="/housings/edit/:id?" render={props => <HousingForm {...props} onSubmit={(values) => console.log(values)} />} />
-                    <Route path="/housings" component={HousingList} />
-                </Switch>
-            </BrowserRouter>
+            <Switch>
+                <Route path="/auditoriums/edit/" exact component={AuditoriumForm} />
+                <Route path="/housings/edit/:id?" exact render={props => <HousingForm {...props} onSubmit={(values) => console.log(values)} />} />
+                <Route path="/housings" exact component={HousingList} />
+                <Redirect to="/" />
+            </Switch>
         </main>
     )
 };

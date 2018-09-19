@@ -47,6 +47,7 @@ const config = {
     devServer: {
         historyApiFallback: true,
         contentBase: outputPath,
+        publicPath: '/',
         port: 3000,
         inline: true,
         hot: true

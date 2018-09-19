@@ -9,7 +9,7 @@ class HousingList extends Component {
         return (
             <ul>
                 {housings.map(housing => (
-                    <li>
+                    <li key={housing.number}>
                         Housing number: {housing.number}
                         <button type="button" onClick={() => removeHousing(housing.id)}>Remove</button>
                     </li>
