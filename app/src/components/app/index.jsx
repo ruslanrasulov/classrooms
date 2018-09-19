@@ -15,14 +15,17 @@ export default (props) => {
     }
 
     return (
-        <main>
+        <div>
             <Header />
-            <Switch>
-                <Route path="/auditoriums/edit/" exact component={AuditoriumForm} />
-                <Route path="/housings/edit/:id?" exact render={props => <HousingForm {...props} onSubmit={(values) => console.log(values)} />} />
-                <Route path="/housings" exact component={HousingList} />
-                <Redirect to="/" />
-            </Switch>
-        </main>
-    )
+            <main className="container">
+                <Switch>
+                    <Route path="/auditoriums/edit/" exact component={AuditoriumForm} />
+                    <Route path="/housings/add" exact component={HousingForm} />
+                    <Route path="/housings/edit/:id?" exact render={props => <HousingForm {...props} onSubmit={(values) => console.log(values)} />} />
+                    <Route path="/housings" exact component={HousingList} />
+                    <Redirect to="/" />
+                </Switch>
+            </main>
+        </div>
+    );
 };

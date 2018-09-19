@@ -15,8 +15,8 @@ const SelectInput = (props) => {
     );
 };
 
-const HousingForm = ({ handleSubmit, pristine, submitting, onSubmit }) => (
-    <form onSubmit={handleSubmit(onSubmit)}>
+const HousingForm = ({ handleSubmit, pristine, submitting }) => (
+    <form onSubmit={handleSubmit}>
         <div>
             <label htmlFor="housing-number">Housing number:</label>
             <Field name="housingNumber" component="input" type="text" />

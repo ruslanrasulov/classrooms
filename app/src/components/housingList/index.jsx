@@ -1,20 +1,30 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { removeHousing } from './../../actions/housingActions';
+import './_styles.scss';
 
 class HousingList extends Component {
     render() {
         const { housings, removeHousing } = this.props;
         
         return (
-            <ul>
-                {housings.map(housing => (
-                    <li key={housing.number}>
-                        Housing number: {housing.number}
-                        <button type="button" onClick={() => removeHousing(housing.id)}>Remove</button>
-                    </li>
-                ))}
-            </ul>
+            <div className="housing-list">
+                <nav className="housing-list__nav">
+                    <Link to="/housings/add" className="housing-list__add-button">Add a new housing</Link>
+                </nav>
+                <ul>
+                    {housings.map(housing => (
+                        <li key={housing.number} className="housing-list__item">
+                            <span className="housing-list__item__name">Housing number: {housing.number}</span>
+                            <div className="housing-list__item__buttons">
+                                <Link to="/" className="housing-list__item__button">Detailed info</Link>
+                                <button className="housing-list__item__button" type="button" onClick={() => removeHousing(housing.id)}>Remove</button>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         );
     };
 };

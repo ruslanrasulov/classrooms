@@ -1,0 +1,60 @@
+%clearfix {
+    display: block;
+    content: ' ';
+    clear: both;
+}
+
+.housing-list {
+    &__add-button {
+        display: block;
+        border-radius: 5px;
+        padding: 5px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        float: right;
+        background-color: #4eb243;
+
+        &:hover {
+            background-color: #19ff00;
+        }
+    }
+
+    &__nav {
+        &::after {
+            @extend %clearfix;
+        }
+    }
+
+    &__item {
+        border: 1px solid #e5e5e5;
+        border-radius: 5px;
+        padding: 15px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+
+        &:hover {
+            background-color: #e5e5e5;
+        }
+
+        &__buttons {
+            float: right;
+        }
+
+        &::after {
+            @extend %clearfix
+        }
+
+        &__name {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        &__button {
+            background-color: red;
+            border: 1px solid red;
+            font-size: 15px;
+            margin-left: 15px;
+            padding: 5px;
+        }
+    }
+}
