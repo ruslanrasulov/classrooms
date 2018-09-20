@@ -2,13 +2,13 @@
 
 namespace Classrooms.Api.Domain.Entities
 {
-    public class Auditorium
+    public class AuditoriumDetailedInfo
     {
         public string Id { get; set; }
 
-        public string HousingId { get; set; }
-
         public int Number { get; set; }
+
+        public int HousingNumber { get; set; }
 
         public int Floor { get; set; }
 

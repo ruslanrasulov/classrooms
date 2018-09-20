@@ -4,10 +4,10 @@ namespace Classrooms.Api.Domain.Entities
 {
     public class Housing
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public int Number { get; set; }
 
-        IEnumerable<Auditorium> Auditoriums { get; set; }
+        public IEnumerable<Auditorium> Auditoriums { get; set; }
     }
 }
