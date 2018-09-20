@@ -3,7 +3,7 @@ using Classrooms.Api.DataAccess.Interfaces;
 using Classrooms.Api.DataAccess.Settings;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Classrooms.Api.DataAccess
+namespace Classrooms.Api.DataAccess.Extensions
 {
     public static class ServiceCollectionExtensions
     {
