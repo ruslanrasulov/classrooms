@@ -37,7 +37,7 @@ namespace Classrooms.Api.Web.Controllers
             return Ok(detailedInfo);
         }
 
-        [HttpPost("api/[controller]/[action]/")]
+        [HttpPost("api/[controller]/")]
         public async Task<IActionResult> AddHousing(CreateHousingVm createHousingVm)
         {
             if (ModelState.IsValid)
@@ -45,13 +45,13 @@ namespace Classrooms.Api.Web.Controllers
                 var housing = _mapper.Map<CreateHousingVm, Housing>(createHousingVm);
                 var result = await _housingLogic.AddAsync(housing);
 
-                return Created($"/housings/{housing.Id}", housing);
+                return Created($"/housings/{result.Id}", result);
             }
 
             return BadRequest(ModelState);
         }
 
-        [HttpPut("api/[controller]/[action]/{id}")]
+        [HttpPut("api/[controller]/{id}")]
         public async Task<IActionResult> Edit(EditHousingVm editHousingVm)
         {
             if (ModelState.IsValid)
@@ -59,13 +59,13 @@ namespace Classrooms.Api.Web.Controllers
                 var housing = _mapper.Map<EditHousingVm, Housing>(editHousingVm);
                 var result = await _housingLogic.UpdateAsync(housing);
 
-                return Ok();
+                return Ok(result);
             }
 
             return BadRequest(ModelState);
         }
 
-        [HttpDelete("api/[controller]/[action]/{id}")]
+        [HttpDelete("api/[controller]/{id}")]
         public async Task<IActionResult> Remove(string id)
         {
             await _housingLogic.RemoveAsync(new Housing { Id = id });
