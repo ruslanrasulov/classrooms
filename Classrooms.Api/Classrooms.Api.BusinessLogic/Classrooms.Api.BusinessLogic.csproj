@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Classrooms.Api.DataAccess\Classrooms.Api.DataAccess.csproj" />
     <ProjectReference Include="..\Classrooms.Api.Domain\Classrooms.Api.Domain.csproj" />
   </ItemGroup>
 

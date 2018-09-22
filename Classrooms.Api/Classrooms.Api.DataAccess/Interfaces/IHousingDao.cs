@@ -4,7 +4,7 @@ using Classrooms.Api.Domain.Entities;
 
 namespace Classrooms.Api.DataAccess.Interfaces
 {
-    public interface IHousingsDao
+    public interface IHousingDao
     {
         Task<IEnumerable<Housing>> GetAllAsync();
 

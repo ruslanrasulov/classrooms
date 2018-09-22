@@ -4,7 +4,7 @@ using Classrooms.Api.Domain.Entities;
 
 namespace Classrooms.Api.DataAccess.Interfaces
 {
-    public interface IAuditoriumsDao
+    public interface IAuditoriumDao
     {
         Task<IEnumerable<Auditorium>> GetAllAsync();
 

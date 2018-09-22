@@ -10,9 +10,9 @@ using MongoDB.Driver;
 
 namespace Classrooms.Api.DataAccess.Implementations
 {
-    internal class HousingsDao : BaseDao, IHousingsDao
+    internal class HousingDao : BaseDao, IHousingDao
     {
-        public HousingsDao(IDataAccessSettings settings)
+        public HousingDao(IDataAccessSettings settings)
             : base(settings)
         {
         }

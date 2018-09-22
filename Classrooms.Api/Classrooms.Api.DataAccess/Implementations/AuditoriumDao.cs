@@ -8,11 +8,11 @@ using MongoDB.Driver;
 
 namespace Classrooms.Api.DataAccess.Implementations
 {
-    internal class AuditoriumsDao : BaseDao, IAuditoriumsDao
+    internal class AuditoriumDao : BaseDao, IAuditoriumDao
     {
         private readonly string _connectionString;
 
-        public AuditoriumsDao(IDataAccessSettings settings)
+        public AuditoriumDao(IDataAccessSettings settings)
             : base(settings)
         {
         }

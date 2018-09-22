@@ -1,37 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Classrooms.Api.BusinessLogic.Interfaces;
+using Classrooms.Api.DataAccess.Interfaces;
 using Classrooms.Api.Domain.Entities;
 
 namespace Classrooms.Api.BusinessLogic.Implementations
 {
     internal class AuditoriumLogic : IAuditoriumLogic
     {
-        public Task<Auditorium> AddAsync(Auditorium auditorium)
+        private readonly IAuditoriumDao _auditoriumDao;
+
+        public AuditoriumLogic(IAuditoriumDao auditoriumDao)
         {
-            throw new NotImplementedException();
+            _auditoriumDao = auditoriumDao;
         }
 
-        public Task<IEnumerable<Auditorium>> GetAllAsync()
+        public async Task<Auditorium> AddAsync(Auditorium auditorium)
         {
-            throw new NotImplementedException();
+            if (auditorium == null)
+            {
+                throw new ArgumentNullException(nameof(auditorium));
+            }
+
+            return await _auditoriumDao.AddAsync(auditorium);
         }
 
-        public Task<IEnumerable<AuditoriumDetailedInfo>> GetDetailedInfoAsync()
+        public async Task<IEnumerable<Auditorium>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _auditoriumDao.GetAllAsync();
         }
 
-        public Task RemoveAsync(Auditorium auditorium)
+        public async Task<IEnumerable<AuditoriumDetailedInfo>> GetDetailedInfoAsync()
         {
-            throw new NotImplementedException();
+            return await _auditoriumDao.GetDetailedInfoAsync();
         }
 
-        public Task<Auditorium> UpdateAsync(Auditorium auditorium)
+        public async Task RemoveAsync(Auditorium auditorium)
         {
-            throw new NotImplementedException();
+            if (auditorium == null)
+            {
+                throw new ArgumentNullException(nameof(auditorium));
+            }
+
+            await _auditoriumDao.RemoveAsync(auditorium);
+        }
+
+        public async Task<Auditorium> UpdateAsync(Auditorium auditorium)
+        {
+            if (auditorium == null)
+            {
+                throw new ArgumentNullException(nameof(auditorium));
+            }
+
+            return await _auditoriumDao.UpdateAsync(auditorium);
         }
     }
 }

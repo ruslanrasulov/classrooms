@@ -10,8 +10,8 @@ namespace Classrooms.Api.DataAccess.Extensions
         public static void AddDataAccess(this IServiceCollection services, IDataAccessSettings settings)
         {
             services.AddSingleton(settings);
-            services.AddTransient<IHousingsDao, HousingsDao>();
-            services.AddTransient<IAuditoriumsDao, AuditoriumsDao>();
+            services.AddTransient<IHousingDao, HousingDao>();
+            services.AddTransient<IAuditoriumDao, AuditoriumDao>();
         }
     }
 }

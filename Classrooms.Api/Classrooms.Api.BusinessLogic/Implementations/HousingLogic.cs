@@ -2,35 +2,58 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Classrooms.Api.BusinessLogic.Interfaces;
+using Classrooms.Api.DataAccess.Interfaces;
 using Classrooms.Api.Domain.Entities;
 
 namespace Classrooms.Api.BusinessLogic.Implementations
 {
     internal class HousingLogic : IHousingLogic
     {
-        public Task<Housing> AddAsync(Housing housing)
+        private readonly IHousingDao _housingsDao;
+
+        public HousingLogic(IHousingDao housingsDao)
         {
-            throw new NotImplementedException();
+            _housingsDao = housingsDao;
         }
 
-        public Task<IEnumerable<Housing>> GetAllAsync()
+        public async Task<Housing> AddAsync(Housing housing)
         {
-            throw new NotImplementedException();
+            if (housing == null)
+            {
+                throw new ArgumentNullException(nameof(housing));
+            }
+
+            return await _housingsDao.AddAsync(housing);
         }
 
-        public Task<IEnumerable<HousingDetailedInfo>> GetDetailedInfoAsync()
+        public async Task<IEnumerable<Housing>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _housingsDao.GetAllAsync();
         }
 
-        public Task RemoveAsync(Housing housing)
+        public async Task<IEnumerable<HousingDetailedInfo>> GetDetailedInfoAsync()
         {
-            throw new NotImplementedException();
+            return await _housingsDao.GetDetailedInfoAsync();
         }
 
-        public Task<Housing> UpdateAsync(Housing housing)
+        public async Task RemoveAsync(Housing housing)
         {
-            throw new NotImplementedException();
+            if (housing == null)
+            {
+                throw new ArgumentNullException(nameof(housing));
+            }
+
+            await _housingsDao.RemoveAsync(housing);
+        }
+
+        public async Task<Housing> UpdateAsync(Housing housing)
+        {
+            if (housing == null)
+            {
+                throw new ArgumentNullException(nameof(housing));
+            }
+
+            return await _housingsDao.UpdateAsync(housing);
         }
     }
 }
