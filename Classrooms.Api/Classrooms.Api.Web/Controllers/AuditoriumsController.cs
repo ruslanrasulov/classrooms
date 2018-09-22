@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Classrooms.Api.Web.Controllers
 {
+    [Route("api/auditoriums")]
     public class AuditoriumsController : Controller
     {
         private readonly IAuditoriumLogic _auditoriumLogic;
@@ -19,7 +20,7 @@ namespace Classrooms.Api.Web.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("api/[controller]/")]
+        [HttpGet]
         public async Task<IActionResult> Get()
         {
             var auditoriumds = await _auditoriumLogic.GetAllAsync();
@@ -28,7 +29,7 @@ namespace Classrooms.Api.Web.Controllers
             return Ok(auditoriumVms);
         }
 
-        [HttpGet("api/[controller]/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var result = await _auditoriumLogic.GetById(id);
@@ -37,7 +38,16 @@ namespace Classrooms.Api.Web.Controllers
             return Ok(auditorium);
         }
 
-        [HttpPost("api/[controller]/")]
+        [HttpGet("detailed")]
+        public async Task<IActionResult> GetDetailedInfo()
+        {
+            var result = await _auditoriumLogic.GetDetailedInfoAsync();
+            var auditoriums = _mapper.MapEnumerable<AuditoriumDetailedInfo, AuditoriumDetailedInfoVm>(result);
+
+            return Ok(auditoriums);
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Post([FromBody]CreateAuditoriumsVm createAuditoriumsVm)
         {
             if (ModelState.IsValid)
@@ -51,7 +61,7 @@ namespace Classrooms.Api.Web.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpPut("api/[controller]/{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> Put([FromBody] EditAuditoriumVm editAuditoriumVm)
         {
             if (ModelState.IsValid)
@@ -65,7 +75,7 @@ namespace Classrooms.Api.Web.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpDelete("api/[controller]/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Remove(string id)
         {
             await _auditoriumLogic.RemoveAsync(new Auditorium { Id = id });

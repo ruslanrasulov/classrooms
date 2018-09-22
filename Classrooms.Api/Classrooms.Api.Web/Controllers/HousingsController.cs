@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Classrooms.Api.Web.Controllers
 {
+    [Route("api/housings")]
     public class HousingsController : Controller
     {
         private readonly IHousingLogic _housingLogic;
@@ -19,7 +20,7 @@ namespace Classrooms.Api.Web.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("api/[controller]")]
+        [HttpGet]
         public async Task<IActionResult> Get()
         {
             var housings = await _housingLogic.GetAllAsync();
@@ -28,7 +29,7 @@ namespace Classrooms.Api.Web.Controllers
             return Ok(housingVms);
         }
 
-        [HttpGet("api/[controller]/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var housing = await _housingLogic.GetById(id);
@@ -37,7 +38,7 @@ namespace Classrooms.Api.Web.Controllers
             return Ok(housingVm);
         }
 
-        [HttpGet("api/[controller]/detailed")]
+        [HttpGet("detailed")]
         public async Task<IActionResult> GetDetailedInfo()
         {
             var result = await _housingLogic.GetDetailedInfoAsync();
@@ -46,7 +47,7 @@ namespace Classrooms.Api.Web.Controllers
             return Ok(detailedInfo);
         }
 
-        [HttpPost("api/[controller]/")]
+        [HttpPost]
         public async Task<IActionResult> AddHousing(CreateHousingVm createHousingVm)
         {
             if (ModelState.IsValid)
@@ -60,7 +61,7 @@ namespace Classrooms.Api.Web.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpPut("api/[controller]/{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> Edit(EditHousingVm editHousingVm)
         {
             if (ModelState.IsValid)
@@ -74,7 +75,7 @@ namespace Classrooms.Api.Web.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpDelete("api/[controller]/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Remove(string id)
         {
             await _housingLogic.RemoveAsync(new Housing { Id = id });
