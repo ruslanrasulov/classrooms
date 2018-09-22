@@ -28,6 +28,15 @@ namespace Classrooms.Api.Web.Controllers
             return Ok(housingVms);
         }
 
+        [HttpGet("api/[controller]/{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var housing = await _housingLogic.GetById(id);
+            var housingVm = _mapper.Map<Housing, HousingVm>(housing);
+
+            return Ok(housingVm);
+        }
+
         [HttpGet("api/[controller]/detailed")]
         public async Task<IActionResult> GetDetailedInfo()
         {

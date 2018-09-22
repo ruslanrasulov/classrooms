@@ -22,6 +22,11 @@ namespace Classrooms.Api.DataAccess.Implementations
             throw new NotImplementedException();
         }
 
+        public Task<Housing> GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<Housing>> GetAllAsync()
         {
             var db = Client.GetDatabase("classrooms");

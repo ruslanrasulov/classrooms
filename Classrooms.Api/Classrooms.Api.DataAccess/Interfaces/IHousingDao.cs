@@ -6,6 +6,8 @@ namespace Classrooms.Api.DataAccess.Interfaces
 {
     public interface IHousingDao
     {
+        Task<Housing> GetById(int id);
+
         Task<IEnumerable<Housing>> GetAllAsync();
 
         Task<IEnumerable<HousingDetailedInfo>> GetDetailedInfoAsync();

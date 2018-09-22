@@ -6,6 +6,8 @@ namespace Classrooms.Api.BusinessLogic.Interfaces
 {
     public interface IHousingLogic
     {
+        Task<Housing> GetById(int id);
+
         Task<IEnumerable<Housing>> GetAllAsync();
 
         Task<IEnumerable<HousingDetailedInfo>> GetDetailedInfoAsync();
