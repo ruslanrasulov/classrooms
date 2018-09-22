@@ -6,6 +6,8 @@ namespace Classrooms.Api.DataAccess.Interfaces
 {
     public interface IAuditoriumDao
     {
+        Task<Auditorium> GetById(int id);
+
         Task<IEnumerable<Auditorium>> GetAllAsync();
 
         Task<IEnumerable<AuditoriumDetailedInfo>> GetDetailedInfoAsync();

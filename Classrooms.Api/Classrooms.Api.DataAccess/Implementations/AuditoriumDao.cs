@@ -22,6 +22,11 @@ namespace Classrooms.Api.DataAccess.Implementations
             throw new NotImplementedException();
         }
 
+        public Task<Auditorium> GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<IEnumerable<Auditorium>> GetAllAsync()
         {
             throw new NotImplementedException();

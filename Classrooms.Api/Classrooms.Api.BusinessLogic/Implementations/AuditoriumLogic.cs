@@ -26,6 +26,11 @@ namespace Classrooms.Api.BusinessLogic.Implementations
             return await _auditoriumDao.AddAsync(auditorium);
         }
 
+        public async Task<Auditorium> GetById(int id)
+        {
+            return await _auditoriumDao.GetById(id);
+        }
+
         public async Task<IEnumerable<Auditorium>> GetAllAsync()
         {
             return await _auditoriumDao.GetAllAsync();
