@@ -72,6 +72,7 @@ namespace Classrooms.Api.DataAccess.Implementations
                 {
                     { "Id", "$Auditoriums.Id" },
                     { "Number", "$Auditoriums.Number" },
+                    { "Capacity", "$Auditoriums.Capacity" },
                     { "HousingNumber", "$Number" },
                     { "Floor", "$Auditoriums.Floor" },
                     { "Type", "$Auditoriums.Type" }

@@ -13,6 +13,8 @@ namespace Classrooms.Api.Domain.Entities
 
         public int Number { get; set; }
 
+        public int Capacity { get; set; }
+
         public int Floor { get; set; }
 
         public AuditoriumTypes Type { get; set; }
