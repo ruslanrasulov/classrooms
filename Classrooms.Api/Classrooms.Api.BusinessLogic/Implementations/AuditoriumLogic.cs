@@ -26,14 +26,14 @@ namespace Classrooms.Api.BusinessLogic.Implementations
             return await _auditoriumDao.AddAsync(auditorium);
         }
 
-        public async Task<Auditorium> GetById(int id)
+        public async Task<Auditorium> GetById(string housingId, string auditoriumId)
         {
-            return await _auditoriumDao.GetById(id);
+            return await _auditoriumDao.GetById(housingId, auditoriumId);
         }
 
-        public async Task<IEnumerable<Auditorium>> GetAllAsync()
+        public async Task<IEnumerable<Auditorium>> GetAllAsync(string housingId)
         {
-            return await _auditoriumDao.GetAllAsync();
+            return await _auditoriumDao.GetAllAsync(housingId);
         }
 
         public async Task<IEnumerable<AuditoriumDetailedInfo>> GetDetailedInfoAsync()

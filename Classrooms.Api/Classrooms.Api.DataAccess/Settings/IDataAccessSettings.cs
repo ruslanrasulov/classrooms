@@ -3,5 +3,7 @@
     public interface IDataAccessSettings
     {
         string ConnectionString { get; }
+
+        string ClassroomsDatabaseName { get; }
     }
 }

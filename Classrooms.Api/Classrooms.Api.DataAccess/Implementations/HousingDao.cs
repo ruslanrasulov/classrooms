@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Classrooms.Api.DataAccess.Extensions;
 using Classrooms.Api.DataAccess.Interfaces;
 using Classrooms.Api.DataAccess.Settings;
 using Classrooms.Api.Domain.Entities;
-using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Classrooms.Api.DataAccess.Implementations
@@ -17,37 +15,24 @@ namespace Classrooms.Api.DataAccess.Implementations
         {
         }
 
-        public Task<Housing> AddAsync(Housing housing)
+        public async Task<Housing> AddAsync(Housing housing)
         {
-            throw new NotImplementedException();
+            await Housings.InsertOneAsync(housing);
+
+            return housing;
         }
 
-        public Task<Housing> GetById(int id)
+        public async Task<Housing> GetById(string id)
         {
-            throw new NotImplementedException();
+            var filter = Builders<Housing>.Filter.Eq("Id", id);
+            return await Housings
+                .Find(filter)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Housing>> GetAllAsync()
         {
-            var db = Client.GetDatabase("classrooms");
-            var housings = db.GetCollection<BsonDocument>("housings");
-
-            using (var cursor = await housings.FindAsync(FilterDefinition<BsonDocument>.Empty))
-            {
-                var result = new List<Housing>();
-                
-                while (await cursor.MoveNextAsync())
-                {
-                    var batch = cursor.Current;
-
-                    foreach (var item in batch)
-                    {
-                        result.Add(item.AsHousing());
-                    }
-                }
-
-                return result;
-            }
+            return await Housings.Find(_ => true).ToListAsync();
         }
 
         public Task<IEnumerable<HousingDetailedInfo>> GetDetailedInfoAsync()
@@ -55,14 +40,20 @@ namespace Classrooms.Api.DataAccess.Implementations
             throw new NotImplementedException();
         }
 
-        public Task RemoveAsync(Housing housing)
+        public async Task RemoveAsync(Housing housing)
         {
-            throw new NotImplementedException();
+            var filter = Builders<Housing>.Filter.Eq("Id", housing.Id);
+            await Housings.DeleteOneAsync(filter);
         }
 
-        public Task<Housing> UpdateAsync(Housing housing)
+        public async Task<Housing> UpdateAsync(Housing housing)
         {
-            throw new NotImplementedException();
+            var filter = Builders<Housing>.Filter.Eq("Id", housing.Id);
+            var update = Builders<Housing>.Update.Set(h => h.Number, housing.Number);
+
+            await Housings.UpdateOneAsync(filter, update);
+
+            return await GetById(housing.Id);
         }
     }
 }

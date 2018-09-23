@@ -21,10 +21,8 @@ namespace Classrooms.Api.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDataAccess(new DataAccessSettings
-            {
-                ConnectionString = _configuration.GetConnectionString("DefaultConnectionString")
-            });
+            var settings = _configuration.GetSection("DataAccessSettings").Get<DataAccessSettings>();
+            services.AddDataAccess(settings);
             services.AddBusinessLogic();
 
             services.AddAutoMapper();

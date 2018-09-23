@@ -1,35 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Classrooms.Api.DataAccess.Interfaces;
 using Classrooms.Api.DataAccess.Settings;
 using Classrooms.Api.Domain.Entities;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Classrooms.Api.DataAccess.Implementations
 {
     internal class AuditoriumDao : BaseDao, IAuditoriumDao
     {
-        private readonly string _connectionString;
-
         public AuditoriumDao(IDataAccessSettings settings)
             : base(settings)
         {
         }
 
-        public Task<Auditorium> AddAsync(Auditorium auditorium)
+        public async Task<Auditorium> AddAsync(Auditorium auditorium)
         {
-            throw new NotImplementedException();
+            var filter = Builders<Housing>.Filter.Eq("Id", auditorium.HousingId);
+            var housing = await Housings.Find(filter).FirstAsync();
+
+            if (housing == null)
+            {
+                return null;
+            }
+
+            if (housing.Auditoriums == null)
+            {
+                housing.Auditoriums = new List<Auditorium>();
+            }
+
+            auditorium.Id = ObjectId.GenerateNewId().ToString();
+            housing.Auditoriums.Add(auditorium);
+
+            await Housings.ReplaceOneAsync(h => string.Equals(h.Id, housing.Id), housing);
+
+            return auditorium;
         }
 
-        public Task<Auditorium> GetById(int id)
+        public async Task<Auditorium> GetById(string housingId, string auditoriumId)
         {
-            throw new NotImplementedException();
+            var filter = Builders<Housing>.Filter.Eq("Id", housingId);
+            var housing = await Housings.Find(filter).FirstOrDefaultAsync();
+
+            return housing?.Auditoriums?.FirstOrDefault(a => string.Equals(a.Id, auditoriumId));
         }
 
-        public Task<IEnumerable<Auditorium>> GetAllAsync()
+        public async Task<IEnumerable<Auditorium>> GetAllAsync(string housingId)
         {
-            throw new NotImplementedException();
+            var filter = Builders<Housing>.Filter.Eq("Id", housingId);
+            var housing = await Housings.Find(filter).FirstOrDefaultAsync();
+
+            if (housing != null)
+            {
+                return housing.Auditoriums?.ToList() ?? new List<Auditorium>();
+            }
+
+            return null;
         }
 
         public Task<IEnumerable<AuditoriumDetailedInfo>> GetDetailedInfoAsync()
@@ -37,14 +66,40 @@ namespace Classrooms.Api.DataAccess.Implementations
             throw new NotImplementedException();
         }
 
-        public Task RemoveAsync(Auditorium auditorium)
+        public async Task RemoveAsync(Auditorium auditorium)
         {
-            throw new NotImplementedException();
+            var filter = Builders<Housing>.Filter.Eq("Id", auditorium.HousingId);
+            var housing = await Housings.Find(filter).FirstAsync();
+
+            housing.Auditoriums.Remove(housing.Auditoriums.FirstOrDefault(a => string.Equals(a.Id, auditorium.Id)));
+
+            await Housings.ReplaceOneAsync(h => string.Equals(h.Id, housing.Id), housing);
         }
 
-        public Task<Auditorium> UpdateAsync(Auditorium auditorium)
+        public async Task<Auditorium> UpdateAsync(Auditorium auditorium)
         {
-            throw new NotImplementedException();
+            var filter = Builders<Housing>.Filter.Eq("Id", auditorium.HousingId);
+            var housing = await Housings.Find(filter).FirstOrDefaultAsync();
+
+            if (housing == null || housing.Auditoriums?.Count == 0)
+            {
+                return null;
+            }
+
+            var auditoriumForUpdate = housing.Auditoriums.FirstOrDefault(a => string.Equals(a.Id, auditorium.Id));
+
+            if (auditoriumForUpdate == null)
+            {
+                return null;
+            }
+
+            auditoriumForUpdate.Number = auditorium.Number;
+            auditoriumForUpdate.Floor = auditorium.Floor;
+            auditoriumForUpdate.Type = auditorium.Type;
+
+            await Housings.ReplaceOneAsync(h => string.Equals(h.Id, housing.Id), housing);
+
+            return auditoriumForUpdate;
         }
     }
 }

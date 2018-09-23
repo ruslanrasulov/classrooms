@@ -26,7 +26,7 @@ namespace Classrooms.Api.BusinessLogic.Implementations
             return await _housingsDao.AddAsync(housing);
         }
 
-        public async Task<Housing> GetById(int id)
+        public async Task<Housing> GetById(string id)
         {
             return await _housingsDao.GetById(id);
         }
