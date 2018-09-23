@@ -1,17 +1,14 @@
-﻿namespace Classrooms.Api.Domain.Entities
+﻿using System.Collections.Generic;
+using Classrooms.Api.Domain.Enums;
+
+namespace Classrooms.Api.Domain.Entities
 {
     public class HousingDetailedInfo
     {
-        public string Id { get; set; }
-
         public int Number { get; set; }
 
-        public int ComputerCapacity { get; set; }
+        public IDictionary<AuditoriumTypes, int> CountPerType { get; set; }
 
-        public int LaboratoryCapacity { get; set; }
-
-        public int LectureCapacity { get; set; }
-
-        public int AuditoriumsCapacity { get; set; }
+        public int TotalCapacity { get; set; }
     }
 }

@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Classrooms.Api.DataAccess.Extensions;
 using Classrooms.Api.DataAccess.Interfaces;
 using Classrooms.Api.DataAccess.Settings;
 using Classrooms.Api.Domain.Entities;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
 namespace Classrooms.Api.DataAccess.Implementations
@@ -35,9 +39,77 @@ namespace Classrooms.Api.DataAccess.Implementations
             return await Housings.Find(_ => true).ToListAsync();
         }
 
-        public Task<IEnumerable<HousingDetailedInfo>> GetDetailedInfoAsync()
+        public async Task<IEnumerable<HousingDetailedInfo>> GetDetailedInfoAsync()
         {
-            throw new NotImplementedException();
+            var result = await Housings
+                .Aggregate()
+                .Unwind(h => h.Auditoriums)
+                .Group(new BsonDocument
+                    {
+                        {
+                            "_id",
+                            new BsonDocument
+                            {
+                                { "number", "$Number" },
+                                { "type", "$Auditoriums.Type" }
+                            }
+                        },
+                        {
+                            "CapacityCount",
+                            new BsonDocument
+                            {
+                                { "$sum", "$Auditoriums.Capacity" }
+                            }
+                        },
+                        {
+                            "Count",
+                            new BsonDocument
+                            {
+                                { "$sum", 1 }
+                            }
+                        }
+                    })
+                .Group(new BsonDocument
+                    {
+                        {
+                            "_id",
+                            new BsonDocument
+                            {
+                                { "number", "$_id.number" }
+                            }
+                        },
+                        {
+                            "TotalCapacity",
+                            new BsonDocument
+                            {
+                                { "$sum", "$CapacityCount" }
+                            }
+                        },
+                        {
+                            "CountPerType",
+                            new BsonDocument
+                            {
+                                {
+                                    "$push",
+                                    new BsonDocument
+                                    {
+                                        { "type", "$_id.type" },
+                                        { "count", "$Count" }
+
+                                    }
+                                }
+                            }
+                        }
+                    })
+                .Project(new BsonDocument
+                    {
+                        { "Number", "$Number"},
+                        { "CountPerType", "$CountPerType" },
+                        { "TotalCapacity", "$TotalCapacity" }
+                    })
+                .ToListAsync();
+
+            return result.Select(r => r.AsHousingDetailedInfo()).ToList();
         }
 
         public async Task RemoveAsync(Housing housing)
