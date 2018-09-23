@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Classrooms.Api.DataAccess.Extensions;
 using Classrooms.Api.DataAccess.Interfaces;
 using Classrooms.Api.DataAccess.Settings;
 using Classrooms.Api.Domain.Entities;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
 namespace Classrooms.Api.DataAccess.Implementations
@@ -61,9 +63,22 @@ namespace Classrooms.Api.DataAccess.Implementations
             return null;
         }
 
-        public Task<IEnumerable<AuditoriumDetailedInfo>> GetDetailedInfoAsync()
+        public async Task<IEnumerable<AuditoriumDetailedInfo>> GetDetailedInfoAsync()
         {
-            throw new NotImplementedException();
+            var result = await Housings
+                .Aggregate()
+                .Unwind(field => field.Auditoriums)
+                .Project(new BsonDocument
+                {
+                    { "Id", "$Auditoriums.Id" },
+                    { "Number", "$Auditoriums.Number" },
+                    { "HousingNumber", "$Number" },
+                    { "Floor", "$Auditoriums.Floor" },
+                    { "Type", "$Auditoriums.Type" }
+                })
+                .ToListAsync();
+
+            return result.Select(r => BsonSerializer.Deserialize<AuditoriumDetailedInfo>(r)).ToList();
         }
 
         public async Task RemoveAsync(Auditorium auditorium)
