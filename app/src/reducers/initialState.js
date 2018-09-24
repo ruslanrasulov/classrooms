@@ -1,4 +1,14 @@
 export default {
-    auditories: [],
-    housings: [ { id: 1, number: 1 }, { id: 2, number: 2 }, { id: 3, number: 3 }]
+    auditoriums: {
+        auditoriumList: [],
+        detailedInfo: [],
+        fetchAuditoriums: true,
+        fetchDetailedInfo: true
+    },
+    housings: {
+        housingList: [],
+        detailedInfo: [],
+        fetchHousings: true,
+        fetchDetailedInfo: true
+    }
 };

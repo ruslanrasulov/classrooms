@@ -31,6 +31,12 @@ namespace Classrooms.Api.Web
                 c.SwaggerDoc("v1", new Info { Title = "Classrooms REST Api", Version = "v1" });
             });
 
+            services.AddCors(o => o.AddPolicy("Policy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
             services.AddMvc();
         }
 
@@ -47,6 +53,7 @@ namespace Classrooms.Api.Web
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "REST Api v1");
             });
 
+            app.UseCors("Policy");
             app.UseMvc();
         }
     }

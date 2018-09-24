@@ -1,59 +1,68 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { fetchAuditoriums } from './../../actions/auditoriumActions';
+import spinner from './../../images/spinner.gif';
 import './_styles.scss';
 
-export default props => {
-    const auditoriums = [
-        {
-            number: 1,
-            capacity: 10,
-            floor: 5,
-            type: 'computer'
-        },
-        {
-            number: 2,
-            capacity: 10,
-            floor: 5,
-            type: 'lecture'
-        },
-        {
-            number: 3,
-            capacity: 10,
-            floor: 5,
-            type: 'labaratory'
-        },
-    ];
+class AuditoriumsList extends Component {
+    componentDidMount() {
+        const { loadAuditoriums, match } = this.props;
+        loadAuditoriums(match.params.id);
+    }
 
-    return (
-        <div className="auditoriums">
-            <nav className="auditoriums__nav">
-                <Link to="/auditoriums/add" className="auditoriums__add-button">Add a auditorium</Link>
-            </nav>
-            <table className="auditoriums__list">
-                <thead>
-                    <tr>
-                        <th>Auditorium number</th>
-                        <th>Capacity</th>
-                        <th>Floor</th>
-                        <th>Type</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {auditoriums.map(a => (
-                        <tr>
-                            <th>{a.number}</th>
-                            <th>{a.capacity}</th>
-                            <th>{a.floor}</th>
-                            <th>{a.type}</th>
-                            <th>
-                                <Link to={`/auditoriums/edit/${a.number}`}>Edit</Link>
-                                <button type="button">Remove</button>
-                            </th>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-    );
+    render() {
+        const { fetchAuditoriums, auditoriums } = this.props;
+
+        return (
+            <div>
+                {fetchAuditoriums ? 
+                    <img src={spinner} alt="spinner" className="spinner"/> : 
+                    <div className="auditoriums">
+                    <nav className="auditoriums__nav">
+                        <Link to="/auditoriums/add" className="auditoriums__add-button">Add a auditorium</Link>
+                    </nav>
+                    <table className="auditoriums__list">
+                        <thead>
+                            <tr>
+                                <th>Auditorium number</th>
+                                <th>Capacity</th>
+                                <th>Floor</th>
+                                <th>Type</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {auditoriums.map(a => (
+                                <tr key={a.id}>
+                                    <th>{a.number}</th>
+                                    <th>{a.capacity}</th>
+                                    <th>{a.floor}</th>
+                                    <th>{a.type}</th>
+                                    <th>
+                                        <Link to={`/auditoriums/edit/${a.number}`}>Edit</Link>
+                                        <button type="button">Remove</button>
+                                    </th>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>}
+            </div>
+        );
+    }
 };
+
+const mapStateToProps = state => ({
+    fetchAuditoriums: state.auditoriums.fetchAuditoriums,
+    auditoriums: state.auditoriums.auditoriumList
+});
+
+const mapDispatchToProps = dispatch => ({
+    loadAuditoriums: housingId => dispatch(fetchAuditoriums(housingId))
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps)
+(AuditoriumsList);
