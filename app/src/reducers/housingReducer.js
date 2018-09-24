@@ -28,15 +28,15 @@ const housingReducer = (state = initialState.housings, action) => {
         }
         case actionTypes.FECTH_HOUSINGS_INFO_START: {
             const { fetchDetailedInfo } = action.payload;
-
+            
             return {
                 ...state,
                 fetchDetailedInfo
             };
         }
-        case actionTypes.FETCH_AUDITORIUMS_INFO_COMPLETE: {
+        case actionTypes.FETCH_HOUSINGS_INFO_COMPLETE: {
             const { detailedInfo, fetchDetailedInfo } = action.payload;
-
+            
             return {
                 ...state,
                 fetchDetailedInfo,

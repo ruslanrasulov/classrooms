@@ -1,47 +1,66 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchDetailedInfo } from './../../actions/housingActions';
+import spinner from  './../../images/spinner.gif';
 
-export default props => {
-    const housings = [
-        {
-            number: 1,
-            lectureCapacity: 50,
-            computerCapacity: 50,
-            laboratoryCapacity: 100,
-            totalCapacity: 200,
-        },
-        {
-            number: 2,
-            lectureCapacity: 50,
-            computerCapacity: 50,
-            laboratoryCapacity: 100,
-            totalCapacity: 200,
-        },
-    ];
+class HousingListDetailed extends Component {
+    componentDidMount() {
+        this.props.loadDetailedInfo();
+    }
 
-    return (
-        <div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Housing number</th>
-                        <th>Capacity of lecture auditoriums</th>
-                        <th>Capacity of computer auditoriums</th>
-                        <th>Capacity of laboratory auditoriums</th>
-                        <th>Total capacity</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {housings.map(h => (
-                        <tr>
-                            <th>{h.number}</th>
-                            <th>{h.lectureCapacity}</th>
-                            <th>{h.computerCapacity}</th>
-                            <th>{h.laboratoryCapacity}</th>
-                            <th>{h.totalCapacity}</th>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-    );
+    renderCountPerTypes = countPerType => {
+        const keys = Object.keys(countPerType);
+        const items = [];
+
+        for (let i = 0; i < keys.length; i++) {
+            items.push(
+                <li key={i}>{`${keys[i]}: ${countPerType[keys[i]]}`}</li>
+            )
+        }
+
+        return <ul>{items}</ul>;
+    }
+
+    render() {
+        const { detailedInfo, fetchDetailedInfo } = this.props;
+
+        return (
+            <div>
+                {fetchDetailedInfo ? 
+                    <img src={spinner} alt="spinner" className="spinner"/> :
+                    <div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Housing number</th>
+                                    <th>Capacity per type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {detailedInfo.map(h => (
+                                    <tr key={h.number}>
+                                        <th>{h.number}</th>
+                                        <th>{this.renderCountPerTypes(h.countPerType)}</th>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>}
+            </div>
+        );
+    }
 }
+
+const mapStateToProps = state => ({
+    detailedInfo: state.housings.detailedInfo,
+    fetchDetailedInfo: state.housings.fetchDetailedInfo
+});
+
+const mapDispatchToProps = dispatch => ({
+    loadDetailedInfo: () => dispatch(fetchDetailedInfo())
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(HousingListDetailed);

@@ -24,3 +24,27 @@ export const fetchAuditoriumsComplete = auditoriumList => ({
         fetchAuditoriums: false
     }
 });
+
+export const fetchDetailedInfo = () => dispatch => {
+    dispatch(fetchDetailedInfoStart());
+
+    axios.get("http://localhost:50505/api/housings/auditoriums/detailed")
+        .then(({ data }) => {
+            dispatch(fetchDetailedInfoComplete(data));
+        })
+}
+
+export const fetchDetailedInfoStart = () => ({
+    type: actionTypes.FETCH_AUDITORIUMS_INFO_START,
+    payload: {
+        fetchDetailedInfo: true
+    }
+});
+
+export const fetchDetailedInfoComplete = (detailedInfo) => ({
+    type: actionTypes.FETCH_AUDITORIUMS_INFO_COMPLETE,
+    payload: {
+        detailedInfo,
+        fetchDetailedInfo: false
+    }
+});

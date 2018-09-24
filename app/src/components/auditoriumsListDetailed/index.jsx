@@ -1,45 +1,56 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchDetailedInfo } from './../../actions/auditoriumActions';
+import spinner from  './../../images/spinner.gif';
 
-export default props => {
-    const auditoriums = [
-        {
-            number: 1,
-            housingNumber: 1,
-            floor: 2,
-            capacity: 50,
-            type: 'computer'
-        },
-        {
-            number: 2,
-            housingNumber: 1,
-            floor: 2,
-            capacity: 50,
-            type: 'computer'
-        },
-    ];
+class AuditoriumsListDetailed extends Component {
+    componentDidMount() {
+        this.props.loadDetailedInfo();
+    }
 
-    return (
-        <table>
-            <thead>
-                <tr>
-                    <th>Auditorium number</th>
-                    <th>Housing number</th>
-                    <th>Floor</th>
-                    <th>Capacity</th>
-                    <th>Type</th>
-                </tr>
-            </thead>
-            <tbody>
-                {auditoriums.map(a => (
-                    <tr>
-                        <th>{a.number}</th>
-                        <th>{a.housingNumber}</th>
-                        <th>{a.floor}</th>
-                        <th>{a.capacity}</th>
-                        <th>{a.type}</th>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
-    )
+    render() {
+        const { fetchDetailed, detailedInfo } = this.props;
+        return (
+            <div>
+                {fetchDetailed ?
+                    <img src={spinner} alt="spinner" className="spinner"/> :
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Auditorium number</th>
+                                <th>Housing number</th>
+                                <th>Floor</th>
+                                <th>Capacity</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {detailedInfo.map(a => (
+                                <tr key={a.number}>
+                                    <th>{a.number}</th>
+                                    <th>{a.housingNumber}</th>
+                                    <th>{a.floor}</th>
+                                    <th>{a.capacity}</th>
+                                    <th>{a.type}</th>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>}
+            </div>
+        );
+    }
 }
+
+const mapStateToProps = state => ({
+    detailedInfo: state.auditoriums.detailedInfo,
+    fetchDetailed: state.auditoriums.fetchDetailed
+});
+
+const mapDispatchToProps = dispatch => ({
+    loadDetailedInfo: () => dispatch(fetchDetailedInfo())
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(AuditoriumsListDetailed);
