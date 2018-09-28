@@ -13,7 +13,7 @@ export const fetchAuditoriums = (housingId) => dispatch => {
 export const fetchAuditoriumsStart = () => ({
     type: actionTypes.FETCH_AUDITORIUMS_START,
     payload: {
-        fetchAuditoriums: true
+        isLoading: true
     }
 });
 
@@ -21,7 +21,7 @@ export const fetchAuditoriumsComplete = auditoriumList => ({
     type: actionTypes.FETCH_AUDITORIUMS_COMPLETE,
     payload: {
         auditoriumList,
-        fetchAuditoriums: false
+        isLoading: false
     }
 });
 
@@ -37,7 +37,7 @@ export const fetchDetailedInfo = () => dispatch => {
 export const fetchDetailedInfoStart = () => ({
     type: actionTypes.FETCH_AUDITORIUMS_INFO_START,
     payload: {
-        fetchDetailedInfo: true
+        isLoading: true
     }
 });
 
@@ -45,6 +45,6 @@ export const fetchDetailedInfoComplete = (detailedInfo) => ({
     type: actionTypes.FETCH_AUDITORIUMS_INFO_COMPLETE,
     payload: {
         detailedInfo,
-        fetchDetailedInfo: false
+        isLoading: false
     }
 });

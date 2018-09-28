@@ -34,6 +34,14 @@ namespace Classrooms.Api.DataAccess.Implementations
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<bool> IsHousingExists(int number)
+        {
+            var filter = Builders<Housing>.Filter.Eq("Number", number);
+            return await Housings
+                .Find(filter)
+                .FirstOrDefaultAsync() != null;
+        }
+
         public async Task<IEnumerable<Housing>> GetAllAsync()
         {
             return await Housings.Find(_ => true).ToListAsync();

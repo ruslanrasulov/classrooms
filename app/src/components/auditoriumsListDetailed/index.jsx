@@ -9,10 +9,10 @@ class AuditoriumsListDetailed extends Component {
     }
 
     render() {
-        const { fetchDetailed, detailedInfo } = this.props;
+        const { isLoading, detailedInfo } = this.props;
         return (
             <div>
-                {fetchDetailed ?
+                {isLoading ?
                     <img src={spinner} alt="spinner" className="spinner"/> :
                     <table>
                         <thead>
@@ -43,7 +43,7 @@ class AuditoriumsListDetailed extends Component {
 
 const mapStateToProps = state => ({
     detailedInfo: state.auditoriums.detailedInfo,
-    fetchDetailed: state.auditoriums.fetchDetailed
+    fetchDetailed: state.auditoriums.isLoading
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -1,7 +1,7 @@
 import initialState from './initialState';
 import * as actionTypes from '../actions/actionTypes';
 
-const housingReducer = (state = initialState.housings, action) => {
+const housingReducer = (state = {}, action) => {
     const actionType = action.type;
     
     switch (actionType) {
@@ -11,37 +11,61 @@ const housingReducer = (state = initialState.housings, action) => {
             return state.filter(housing => housing.id !== id);
         }
         case actionTypes.FETCH_HOUSINGS_START: {
-            const { fetchHousings } = action.payload;
+            const { isLoading } = action.payload;
             return {
-                fetchHousings,
+                isLoading,
                 ...state
             }
         }
         case actionTypes.FETCH_HOUSINGS_COMPLETE: {
-            const { housingList, fetchHousings } = action.payload;
+            const { housingList, isLoading } = action.payload;
 
             return {
                 ...state,
                 housingList,
-                fetchHousings,
+                isLoading,
             };
         }
         case actionTypes.FECTH_HOUSINGS_INFO_START: {
-            const { fetchDetailedInfo } = action.payload;
+            const { isLoading } = action.payload;
             
             return {
                 ...state,
-                fetchDetailedInfo
+                isLoading
             };
         }
         case actionTypes.FETCH_HOUSINGS_INFO_COMPLETE: {
-            const { detailedInfo, fetchDetailedInfo } = action.payload;
+            const { detailedInfo, isLoading } = action.payload;
             
             return {
                 ...state,
-                fetchDetailedInfo,
+                isLoading,
                 detailedInfo
             };
+        }
+        case actionTypes.HOUSING_FORM_UPDATE: {
+            const { form } = action.payload;
+
+            return {
+                ...state,
+                form
+            }
+        }
+        case actionTypes.HOUSING_FORM_RESET: {
+            return {
+                ...state,
+                form: { }
+            }
+        }
+        case actionTypes.HOUSING_FORM_ERROR_MESSAGE: {
+            const { message } = action.payload;
+
+            return {
+                ...state,
+                form: {
+                    validationMessage: message
+                }
+            }
         }
         default: {
             return state;

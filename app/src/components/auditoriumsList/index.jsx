@@ -12,11 +12,11 @@ class AuditoriumsList extends Component {
     }
 
     render() {
-        const { fetchAuditoriums, auditoriums } = this.props;
+        const { isLoading, auditoriums } = this.props;
 
         return (
             <div>
-                {fetchAuditoriums ? 
+                {isLoading ? 
                     <img src={spinner} alt="spinner" className="spinner"/> : 
                     <div className="auditoriums">
                     <nav className="auditoriums__nav">
@@ -54,7 +54,7 @@ class AuditoriumsList extends Component {
 };
 
 const mapStateToProps = state => ({
-    fetchAuditoriums: state.auditoriums.fetchAuditoriums,
+    isLoading: state.auditoriums.isLoading,
     auditoriums: state.auditoriums.auditoriumList
 });
 

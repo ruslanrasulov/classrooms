@@ -1,38 +1,57 @@
-import React from 'react';
-import { Field, reduxForm } from 'redux-form';
-import Select from 'react-select';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { updateForm, addHousing } from '../../actions/housingActions';
 
-const SelectInput = (props) => {
-    const { input } = props;
-    
-    return (
-        <Select 
-            isMulti
-            {...input}
-            {...props}
-            onChange={(value) => {input.onChange(value)}}
-            onBlur={() => { }} /> 
-    );
-};
+class HousingForm extends Component {
+    handleInput = e => {
+        const { name, value } = e.target;
 
-const HousingForm = ({ handleSubmit, pristine, submitting }) => (
-    <form onSubmit={handleSubmit}>
-        <div>
-            <label htmlFor="housing-number">Housing number:</label>
-            <Field name="housingNumber" component="input" type="text" />
-        </div>
-        
-        <div>
-            <label htmlFor="housing-auditoriums">Audiroriums</label>
-            <Field 
-                name="housingAuditoriums"  
-                component={SelectInput}
-                options={[{ value: 1, label: '123'}, { value: 2, label: '234' }]} />
-        </div>
-        <button type="submit" disabled={pristine || submitting}>Submit</button>
-    </form>
-);
+        this.props.updateForm({ [name]: value });
+    }
 
-export default reduxForm({
-    form: 'HousingForm'
-})(HousingForm);
+    handleSubmit = e => {
+        e.preventDefault();
+
+        this.props.addHousing(this.props.form);
+    }
+
+    render() {
+        const { number, validationMessage } = this.props;
+
+        return (
+            <form className="housing-form" onSubmit={this.handleSubmit}>
+                <input type="hidden" name="housing-id" />
+                <div>
+                    <label htmlFor="housing-number">Number:</label>
+                    <input 
+                        type="number" 
+                        name="number" 
+                        id="housing-number" 
+                        className="housing-form__input-number"
+                        onChange={this.handleInput} 
+                        value={number || ''} />
+                </div>
+                <span className="housing-form__validation-message">{validationMessage}</span>
+                <div>
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        );
+    }
+}
+
+const mapStateToProps = state => ({
+    number: state.housings.form.number,
+    form: state.housings.form,
+    validationMessage: state.housings.form.validationMessage
+});
+
+const mapDispatchToProps = dispatch => ({
+    updateForm: values => dispatch(updateForm(values)),
+    addHousing: form => dispatch(addHousing(form))
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(HousingForm);

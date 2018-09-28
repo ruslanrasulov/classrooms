@@ -1,41 +1,41 @@
 import initialState from './initialState';
 import * as actionTypes from '../actions/actionTypes';
 
-const auditoriumReducer = (state = initialState.auditoriums, action) => {
+const auditoriumReducer = (state = {}, action) => {
     const actionType = action.type;
 
     switch (actionType) {
         case actionTypes.FETCH_AUDITORIUMS_START: {
-            const { fetchAuditoriums } = action.payload;
+            const { isLoading } = action.payload;
 
             return {
                 ...state,
-                fetchAuditoriums
+                isLoading
             };
         }
         case actionTypes.FETCH_AUDITORIUMS_COMPLETE: {
-            const { auditoriumList, fetchAuditoriums } = action.payload;
+            const { auditoriumList, isLoading } = action.payload;
             
             return {
                 ...state,
                 auditoriumList,
-                fetchAuditoriums
+                isLoading
             };
         }
         case actionTypes.FETCH_AUDITORIUMS_INFO_START: {
-            const { fetchDetailedInfo } = action.payload;
+            const { isLoading } = action.payload;
 
             return {
                 ...state,
-                fetchDetailedInfo
+                isLoading
             };
         }
         case actionTypes.FETCH_AUDITORIUMS_INFO_COMPLETE: {
-            const { detailedInfo, fetchDetailedInfo } = action.payload;
+            const { detailedInfo, isLoading } = action.payload;
 
             return {
                 ...state,
-                fetchDetailedInfo,
+                isLoading,
                 detailedInfo
             };
         }

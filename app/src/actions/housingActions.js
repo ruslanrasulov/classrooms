@@ -1,11 +1,6 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
 
-export const removeHousing = id => ({
-    type: actionTypes.REMOVE_HOUSING,
-    payload: { id }
-});
-
 export const fetchHousings = () => dispatch => {
     dispatch(fetchHousingsStart());
 
@@ -16,13 +11,13 @@ export const fetchHousings = () => dispatch => {
 
 export const fetchHousingsStart = () => ({
     type: actionTypes.FETCH_HOUSINGS_START,
-    payload: { fetchHousings: true }
+    payload: { isLoading: true }
 });
 
 export const fetchHousingsComplete = (housingList) => ({
     type: actionTypes.FETCH_HOUSINGS_COMPLETE,
     payload: {
-        fetchHousings: false,
+        isLoading: false,
         housingList: housingList
     }
 });
@@ -39,14 +34,52 @@ export const fetchDetailedInfo = () => dispatch => {
 export const fetchDetailedInfoStart = () => ({
     type: actionTypes.FECTH_HOUSINGS_INFO_START,
     payload: {
-        fetchDetailedInfo: true
+        isLoading: true
     }
 });
 
 export const fetchDetailedInfoComplete = (detailedInfo) => ({
     type: actionTypes.FETCH_HOUSINGS_INFO_COMPLETE,
     payload: {
-        fetchDetailedInfo: false,
+        isLoading: false,
         detailedInfo
     }
 });
+
+export const removeHousing = (id) => dispatch => (
+    axios.delete(`http://localhost:50505/api/housings/${id}`)
+        .then(result => {
+            if (result.status === 200) {
+                dispatch(fetchHousings());
+            }
+        })
+);
+
+export const removeHousingComplete = id => ({
+    type: actionTypes.REMOVE_HOUSING,
+    payload: {
+        id
+    }
+});
+
+export const updateForm = form => ({
+    type: actionTypes.HOUSING_FORM_UPDATE,
+    payload: { form }
+});
+
+export const addHousing = housing => dispatch => {
+    axios.post('http://localhost:50505/api/housings/', housing)
+        .then(result => {
+            dispatch(setErrorMessage('suskek'));
+        })
+        .catch(error => {
+            dispatch(setErrorMessage(error.response.data));
+        })
+}
+
+export const setErrorMessage = message => ({
+    type: actionTypes.HOUSING_FORM_ERROR_MESSAGE,
+    payload: {
+        message
+    }
+})

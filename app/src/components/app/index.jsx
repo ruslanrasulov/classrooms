@@ -8,6 +8,7 @@ import HousingsListDetailed from './../housingListDetailed';
 import AuditoriumsList from './../auditoriumsList';
 import AuditoriumsListDetailed from '../auditoriumsListDetailed';
 import 'reset-css';
+import 'font-awesome/css/font-awesome.min.css';
 import './_styles.scss';
 
 export default (props) => {

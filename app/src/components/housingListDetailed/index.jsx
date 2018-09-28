@@ -22,11 +22,11 @@ class HousingListDetailed extends Component {
     }
 
     render() {
-        const { detailedInfo, fetchDetailedInfo } = this.props;
+        const { detailedInfo, isLoading } = this.props;
 
         return (
             <div>
-                {fetchDetailedInfo ? 
+                {isLoading ? 
                     <img src={spinner} alt="spinner" className="spinner"/> :
                     <div>
                         <table>
@@ -53,7 +53,7 @@ class HousingListDetailed extends Component {
 
 const mapStateToProps = state => ({
     detailedInfo: state.housings.detailedInfo,
-    fetchDetailedInfo: state.housings.fetchDetailedInfo
+    isLoading: state.housings.isLoading
 });
 
 const mapDispatchToProps = dispatch => ({

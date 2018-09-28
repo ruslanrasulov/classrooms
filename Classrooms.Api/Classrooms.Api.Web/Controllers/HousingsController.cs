@@ -106,6 +106,12 @@ namespace Classrooms.Api.Web.Controllers
             if (ModelState.IsValid)
             {
                 var housing = _mapper.Map<CreateHousingVm, Housing>(createHousingVm);
+
+                if (await _housingLogic.IsHousingExists(housing.Number))
+                {
+                    return BadRequest("Housing with that number is already exists");
+                }
+
                 var result = await _housingLogic.AddAsync(housing);
 
                 return Created($"api/housings/{result.Id}", result);

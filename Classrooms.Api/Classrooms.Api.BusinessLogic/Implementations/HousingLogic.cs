@@ -31,6 +31,11 @@ namespace Classrooms.Api.BusinessLogic.Implementations
             return await _housingsDao.GetById(id);
         }
 
+        public async Task<bool> IsHousingExists(int number)
+        {
+            return await _housingsDao.IsHousingExists(number);
+        }
+
         public async Task<IEnumerable<Housing>> GetAllAsync()
         {
             return await _housingsDao.GetAllAsync();

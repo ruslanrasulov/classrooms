@@ -2,13 +2,16 @@ export default {
     auditoriums: {
         auditoriumList: [],
         detailedInfo: [],
-        fetchAuditoriums: true,
-        fetchDetailedInfo: true
+        form: {
+        },
+        isLoading: true
     },
     housings: {
         housingList: [],
         detailedInfo: [],
-        fetchHousings: true,
-        fetchDetailedInfo: true
+        form: {
+
+        },
+        isLoading: true
     }
 };
