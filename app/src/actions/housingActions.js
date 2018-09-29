@@ -77,9 +77,54 @@ export const addHousing = housing => dispatch => {
         })
 }
 
+export const editHousing = (housing, callback) => dispatch => {
+    dispatch(editHousingStart());
+
+    axios.put(`http://localhost:50505/api/housings/${housing.id}`, housing)
+        .then(result => {
+            dispatch(editHousingComplete());
+            callback();
+        })
+        .catch(error => {
+            dispatch(setErrorMessage(error.response.data));
+        })
+}
+
+export const editHousingStart = () => ({
+    type: actionTypes.HOUSING_EDIT_START
+});
+
+export const editHousingComplete = () => ({
+    type: actionTypes.HOUSING_EDIT_COMPLETE
+});
+
 export const setErrorMessage = message => ({
     type: actionTypes.HOUSING_FORM_ERROR_MESSAGE,
     payload: {
         message
     }
 })
+
+export const fillForm = id => dispatch => {
+    dispatch(fillFormStart());
+
+    axios.get(`http://localhost:50505/api/housings/${id}`)
+        .then(result => {
+            dispatch(fillFormComplete(result.data));
+        })
+}
+
+export const fillFormStart = () => ({
+    type: actionTypes.HOUSING_EDIT_FILL_FORM_START
+});
+
+export const fillFormComplete = housing => ({
+    type: actionTypes.HOUSING_EDIT_FILL_FORM_COMPLETE,
+    payload: {
+        housing
+    }
+});
+
+export const resetForm = () => ({
+    type: actionTypes.HOUSING_RESET_FORM
+});

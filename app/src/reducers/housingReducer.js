@@ -1,4 +1,3 @@
-import initialState from './initialState';
 import * as actionTypes from '../actions/actionTypes';
 
 const housingReducer = (state = {}, action) => {
@@ -51,12 +50,6 @@ const housingReducer = (state = {}, action) => {
                 form
             }
         }
-        case actionTypes.HOUSING_FORM_RESET: {
-            return {
-                ...state,
-                form: { }
-            }
-        }
         case actionTypes.HOUSING_FORM_ERROR_MESSAGE: {
             const { message } = action.payload;
 
@@ -65,6 +58,40 @@ const housingReducer = (state = {}, action) => {
                 form: {
                     validationMessage: message
                 }
+            }
+        }
+        case actionTypes.HOUSING_EDIT_FILL_FORM_START: {
+            return {
+                ...state,
+                isLoading: true
+            }
+        }
+        case actionTypes.HOUSING_EDIT_FILL_FORM_COMPLETE: {
+            const { housing } = action.payload; 
+
+            return {
+                ...state,
+                isLoading: false,
+                form: housing
+            }
+        }
+        case actionTypes.HOUSING_RESET_FORM: {
+            return {
+                ...state,
+                isLoading: false,
+                form: { }
+            }
+        }
+        case actionTypes.HOUSING_EDIT_START: {
+            return {
+                ...state,
+                isLoading: true
+            }
+        }
+        case actionTypes.HOUSING_EDIT_COMPLETE: {
+            return {
+                ...state,
+                isLoading: false
             }
         }
         default: {
