@@ -4,21 +4,19 @@ class AuditoriumForm extends Component {
     render() {
         return (
             <form onSubmit={() => {}} className="auditorium-form">
-                <input type="hidden" name="auditorium-id" />
-
                 <div>
                     <label htmlFor="auditorium-number">Auditorium number:</label>
-                    <input type="number" name="auditorium-number" id="auditorium-number" className="auditorium-form__input-number" />
+                    <input type="number" name="number" id="auditorium-number" className="auditorium-form__input-number" />
                 </div>
 
                 <div>
                     <label htmlFor="capacity">Capacity:</label>
-                    <input type="number" name="auditorium-capacity" id="auditorium-capacity" className="auditorium-form__input-capacity"/>
+                    <input type="number" name="capacity" id="auditorium-capacity" className="auditorium-form__input-capacity"/>
                 </div>
 
                 <div>
                     <label htmlFor="type">Type:</label>
-                    <select name="auditorium-type" id="auditorium-type" className="auditorium-form__input-type">
+                    <select name="type" id="auditorium-type" className="auditorium-form__input-type">
                         <option value="0">Lecture</option>
                         <option value="1">Computer</option>
                         <option value="2">Laboratory</option>

@@ -4,11 +4,6 @@ const housingReducer = (state = {}, action) => {
     const actionType = action.type;
     
     switch (actionType) {
-        case actionTypes.REMOVE_HOUSING: {
-            const { id } = action.payload;
-            
-            return state.filter(housing => housing.id !== id);
-        }
         case actionTypes.FETCH_HOUSINGS_START: {
             const { isLoading } = action.payload;
             return {

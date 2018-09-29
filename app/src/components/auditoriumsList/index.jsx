@@ -12,7 +12,11 @@ class AuditoriumsList extends Component {
     }
 
     render() {
-        const { isLoading, auditoriums } = this.props;
+        const { 
+            isLoading, 
+            auditoriums,
+            match: { params: { id: housingId } }
+        } = this.props;
 
         return (
             <div>
@@ -20,7 +24,7 @@ class AuditoriumsList extends Component {
                     <img src={spinner} alt="spinner" className="spinner"/> : 
                     <div className="auditoriums">
                     <nav className="auditoriums__nav">
-                        <Link to="/auditoriums/add" className="auditoriums__add-button">Add a auditorium</Link>
+                        <Link to={`/housings/${housingId}/auditoriums/add`} className="auditoriums__add-button">Add a auditorium</Link>
                     </nav>
                     <table className="auditoriums__list">
                         <thead>
@@ -40,7 +44,7 @@ class AuditoriumsList extends Component {
                                     <th>{a.floor}</th>
                                     <th>{a.type}</th>
                                     <th>
-                                        <Link to={`/auditoriums/edit/${a.number}`}>Edit</Link>
+                                        <Link to={`/housings/${housingId}/auditoriums/${a.id}/edit`}>Edit</Link>
                                         <button type="button">Remove</button>
                                     </th>
                                 </tr>

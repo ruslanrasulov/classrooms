@@ -67,10 +67,11 @@ export const updateForm = form => ({
     payload: { form }
 });
 
-export const addHousing = housing => dispatch => {
+export const addHousing = (housing, callback) => dispatch => {
     axios.post('http://localhost:50505/api/housings/', housing)
         .then(result => {
             dispatch(setErrorMessage('suskek'));
+            callback();
         })
         .catch(error => {
             dispatch(setErrorMessage(error.response.data));

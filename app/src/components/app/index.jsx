@@ -12,20 +12,14 @@ import 'font-awesome/css/font-awesome.min.css';
 import './_styles.scss';
 
 export default (props) => {
-    const elements = [];
-
-    for (let index = 0; index < 1000; index++) {
-        elements.push(<li key={index}>some element</li>);
-    }
-
     return (
         <div>
             <Header />
             <main className="container">
                 <Switch>
-                    <Route path="/auditoriums/add" exact component={AuditoriumForm} />
-                    <Route path="/auditoriums/edit/:id" exact component={AuditoriumForm} />
-                    <Route path="/auditoriums/detailed-info" exact component={AuditoriumsListDetailed} />
+                    <Route path="/housings/:housingId/auditoriums/add" exact component={AuditoriumForm} />
+                    <Route path="/housings/:housingId/auditoriums/:id/edit" exact component={AuditoriumForm} />
+                    <Route path="/housings/auditoriums/detailed-info" exact component={AuditoriumsListDetailed} />
                     <Route path="/housings/detailed-info" exact component={HousingsListDetailed} />
                     <Route path="/housings/add" exact component={HousingForm} />
                     <Route path="/housings/edit/:id" exact component={HousingForm} />} />

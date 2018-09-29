@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fillForm, updateForm, resetForm, addHousing, editHousing } from '../../actions/housingActions';
+import { 
+    fillForm, 
+    updateForm, 
+    resetForm, 
+    addHousing, 
+    editHousing 
+} from '../../actions/housingActions';
 import spinner from './../../images/spinner.gif';
 
 class HousingForm extends Component {
@@ -14,7 +20,7 @@ class HousingForm extends Component {
         }
     }
 
-    get isEditMode() { 
+    get isEditMode() {
         return this.props.match.params.id !== undefined; 
     }
 
@@ -32,12 +38,14 @@ class HousingForm extends Component {
             match: { params: { id } },
             history: { push }
         } = this.props;
+        const callback = () => push('/housings');
+        
         e.preventDefault();
 
         if (this.isEditMode) {
-            editHousing({ ...form, id }, () => push('/housings'));
+            editHousing({ ...form, id }, callback);
         } else {
-            addHousing(form);
+            addHousing(form, callback);
         }
     }
 
@@ -79,7 +87,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     updateForm: values => dispatch(updateForm(values)),
-    addHousing: form => dispatch(addHousing(form)),
+    addHousing: (form, callback) => dispatch(addHousing(form, callback)),
     editHousing: (form, callback) => dispatch(editHousing(form, callback)),
     fillForm: id => dispatch(fillForm(id)),
     resetForm: () => dispatch(resetForm())
