@@ -42,6 +42,42 @@ const auditoriumReducer = (state = {}, action) => {
         default: {
             return state;
         }
+        case actionTypes.AUDITORIUM_FORM_UPDATE: {
+            const form = Object.assign(state.form, action.payload.form);
+
+            return {
+                ...state,
+                form
+            };
+        }
+        case actionTypes.AUDITORIUM_FORM_RESET: {
+            return {
+                ...state,
+                form: { },
+                isLoading: false
+            };
+        }
+        case actionTypes.AUDITORIUM_ADD_START: {
+            return {
+                ...state,
+                isLoading: true
+            }
+        }
+        case actionTypes.AUDITORIUM_ADD_COMPLETE: {
+            return {
+                ...state,
+                isLoading: false
+            }
+        }
+        case actionTypes.AUDITORIUM_FORM_SET_ERROR_MESSAGE: {
+            const { validationMessage } = action.payload;
+
+            return {
+                ...state,
+                validationMessage,
+                isLoading: false
+            };
+        }
     }
 };
 
