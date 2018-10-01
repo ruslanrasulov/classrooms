@@ -78,6 +78,33 @@ const auditoriumReducer = (state = {}, action) => {
                 isLoading: false
             };
         }
+        case actionTypes.AUDITORIUM_EDIT_START: {
+            return {
+                ...state,
+                isLoading: true
+            };
+        }
+        case actionTypes.AUDITORIUM_EDIT_COMPLETE: {
+            return {
+                ...state,
+                isLoading: false
+            };
+        }
+        case actionTypes.AUDITORIUM_EDIT_FILL_FORM_START: {
+            return {
+                ...state,
+                isLoading: true
+            };
+        }
+        case actionTypes.AUDITORIUM_EDIT_FILL_FORM_COMPLETE: {
+            const { auditorium } = action.payload;
+
+            return {
+                ...state,
+                form: auditorium,
+                isLoading: false,
+            };
+        }
     }
 };
 

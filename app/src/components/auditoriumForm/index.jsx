@@ -1,12 +1,22 @@
 import React, { Component } from 'react';
-import { addAuditorium, resetForm, updateForm } from '../../actions/auditoriumActions';
+import { addAuditorium, resetForm, updateForm, fillForm, editAuditorium } from '../../actions/auditoriumActions';
 import { connect } from 'react-redux';
 import spinner from './../../images/spinner.gif';
 
 class AuditoriumForm extends Component {
     componentDidMount = () => {
-        if (!this.isEditForm) {
-            this.props.resetForm();
+        const {
+            fillForm,
+            resetForm,
+            match: {
+                params: { housingId, id }
+            }
+        } = this.props;
+
+        if (this.isEditForm) {
+            fillForm(housingId, id);
+        } else {
+            resetForm();
         }
     }
 
@@ -24,6 +34,8 @@ class AuditoriumForm extends Component {
 
     handleSubmit = e => {
         const {
+            addAuditorium,
+            editAuditorium,
             form, 
             match: { params: { housingId, id } },
             history: { push }
@@ -32,8 +44,14 @@ class AuditoriumForm extends Component {
 
         e.preventDefault();
 
-        if (!this.isEditForm) {
-            this.props.addAuditorium({
+        if (this.isEditForm) {
+            editAuditorium({
+                ...form,
+                housingId,
+                id
+            }, callback);
+        } else {
+            addAuditorium({
                 ...form,
                 housingId
             }, callback);
@@ -115,7 +133,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     addAuditorium: (auditorium, callback) => dispatch(addAuditorium(auditorium, callback)),
     resetForm: () => dispatch(resetForm()),
-    updateForm: values => dispatch(updateForm(values))
+    updateForm: values => dispatch(updateForm(values)),
+    fillForm: (housingId, auditoriumId) => dispatch(fillForm(housingId, auditoriumId)),
+    editAuditorium: (auditorium, callback) => dispatch(editAuditorium(auditorium, callback))
 });
 
 export default connect(
