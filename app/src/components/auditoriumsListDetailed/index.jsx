@@ -4,12 +4,19 @@ import { fetchDetailedInfo } from './../../actions/auditoriumActions';
 import spinner from  './../../images/spinner.gif';
 
 class AuditoriumsListDetailed extends Component {
+    typeMapping = {
+        0: 'Lecture',
+        1: 'Computer',
+        2: 'Laboratory'
+    };
+
     componentDidMount() {
         this.props.loadDetailedInfo();
     }
 
     render() {
         const { isLoading, detailedInfo } = this.props;
+
         return (
             <div>
                 {isLoading ?
@@ -31,7 +38,7 @@ class AuditoriumsListDetailed extends Component {
                                     <th>{a.housingNumber}</th>
                                     <th>{a.floor}</th>
                                     <th>{a.capacity}</th>
-                                    <th>{a.type}</th>
+                                    <th>{this.typeMapping[a.type]}</th>
                                 </tr>
                             ))}
                         </tbody>

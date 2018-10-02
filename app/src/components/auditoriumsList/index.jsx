@@ -1,22 +1,59 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchAuditoriums } from './../../actions/auditoriumActions';
+import { fetchAuditoriums, removeAuditorium } from './../../actions/auditoriumActions';
+import Modal from '../modal';
 import spinner from './../../images/spinner.gif';
 import './_styles.scss';
 
 class AuditoriumsList extends Component {
+    state = {
+        showModal: false
+    };
+
+    showModal = (id) => {
+        this.setState({
+            showModal: true,
+            auditoriumId: id
+        });
+    }
+
+    closeModal = () => {
+        this.setState({
+            showModal: false
+        });
+    }
+
+    handleSubmit = (auditoriumId) => {
+        const {
+            removeAuditorium,
+            match: {
+                params: { housingId }
+            }
+        } = this.props;
+
+        removeAuditorium(housingId, auditoriumId);
+        this.closeModal();
+    }
+
     componentDidMount() {
-        const { loadAuditoriums, match } = this.props;
-        loadAuditoriums(match.params.id);
+        const { 
+            loadAuditoriums, 
+            match: {
+                params: { housingId }
+            }
+        } = this.props;
+
+        loadAuditoriums(housingId);
     }
 
     render() {
         const { 
             isLoading, 
             auditoriums,
-            match: { params: { id: housingId } }
+            match: { params: { housingId } }
         } = this.props;
+        const { auditoriumId } = this.state;
 
         return (
             <div>
@@ -45,13 +82,20 @@ class AuditoriumsList extends Component {
                                     <th>{a.type}</th>
                                     <th>
                                         <Link to={`/housings/${housingId}/auditoriums/${a.id}/edit`}>Edit</Link>
-                                        <button type="button">Remove</button>
+                                        <button type="button" onClick={() => this.showModal(a.id)}>Remove</button>
                                     </th>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
-                </div>}
+                    <Modal 
+                        visible={this.state.showModal}
+                        title="Are you sure?"
+                        text="Are you sure to remove this auditorium?"
+                        onSubmit={() => this.handleSubmit(auditoriumId)}
+                        onClose={this.closeModal} />
+                </div>
+                }   
             </div>
         );
     }
@@ -63,7 +107,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    loadAuditoriums: housingId => dispatch(fetchAuditoriums(housingId))
+    loadAuditoriums: housingId => dispatch(fetchAuditoriums(housingId)),
+    removeAuditorium: (housingId, auditoriumId) => dispatch(removeAuditorium(housingId, auditoriumId))
 });
 
 export default connect(

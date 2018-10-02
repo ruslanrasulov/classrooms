@@ -23,7 +23,7 @@ export default (props) => {
                     <Route path="/housings/detailed-info" exact component={HousingsListDetailed} />
                     <Route path="/housings/add" exact component={HousingForm} />
                     <Route path="/housings/edit/:id" exact component={HousingForm} />} />
-                    <Route path="/housings/:id/auditoriums" exact component={AuditoriumsList} />
+                    <Route path="/housings/:housingId/auditoriums" exact component={AuditoriumsList} />
                     <Route path="/housings" exact component={HousingList} />
                     <Redirect to="/" />
                 </Switch>

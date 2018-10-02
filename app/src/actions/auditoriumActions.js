@@ -126,7 +126,7 @@ export const editAuditoriumComplete = () => ({
     type: actionTypes.AUDITORIUM_EDIT_COMPLETE
 });
 
-export const removeAuditorium = (housingId, auditoriumId) => {
+export const removeAuditorium = (housingId, auditoriumId) => dispatch => {
     axios.delete(`http://localhost:50505/api/housings/${housingId}/auditoriums/${auditoriumId}`)
         .then(result => {
             dispatch(fetchAuditoriums(housingId));

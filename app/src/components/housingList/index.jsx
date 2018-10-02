@@ -7,12 +7,9 @@ import spinner from  './../../images/spinner.gif';
 import './_styles.scss';
 
 class HousingList extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            showModal: false
-        };
-    }
+    state = {
+        showModal: false
+    };
 
     showModal = (id) => {
         this.setState({
