@@ -74,7 +74,10 @@ const auditoriumReducer = (state = {}, action) => {
 
             return {
                 ...state,
-                validationMessage,
+                form: {
+                    ...state.form,
+                    validationMessage
+                },
                 isLoading: false
             };
         }

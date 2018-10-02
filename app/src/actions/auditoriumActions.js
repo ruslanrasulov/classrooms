@@ -58,7 +58,7 @@ export const addAuditorium = (auditorium, callback) => dispatch => {
             callback();
         })
         .catch(error => {
-            setErrorMessage(error.response.data);
+            dispatch(setErrorMessage(error.response.data));
         });
 }
 
@@ -115,6 +115,9 @@ export const editAuditorium = (auditorium, callback) => dispatch => {
         .then(result => {
             dispatch(editAuditoriumComplete());
             callback();
+        })
+        .catch(error => {
+            dispatch(setErrorMessage(error.response.data));
         });
 };
 

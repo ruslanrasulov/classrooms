@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Classrooms.Api.DataAccess.Extensions;
@@ -7,7 +6,6 @@ using Classrooms.Api.DataAccess.Interfaces;
 using Classrooms.Api.DataAccess.Settings;
 using Classrooms.Api.Domain.Entities;
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
 namespace Classrooms.Api.DataAccess.Implementations
@@ -37,9 +35,9 @@ namespace Classrooms.Api.DataAccess.Implementations
         public async Task<bool> IsHousingExists(int number)
         {
             var filter = Builders<Housing>.Filter.Eq("Number", number);
-            return await Housings
+            return (await Housings
                 .Find(filter)
-                .FirstOrDefaultAsync() != null;
+                .FirstOrDefaultAsync()) != null;
         }
 
         public async Task<IEnumerable<Housing>> GetAllAsync()
@@ -134,6 +132,16 @@ namespace Classrooms.Api.DataAccess.Implementations
             await Housings.UpdateOneAsync(filter, update);
 
             return await GetById(housing.Id);
+        }
+
+        public async Task<bool> IsHousingExists(int number, string exceptHousingId)
+        {
+            var filter = Builders<Housing>.Filter.Eq("Number", number)
+                & Builders<Housing>.Filter.Ne("Id", exceptHousingId);
+
+            return (await Housings
+                .Find(filter)
+                .FirstOrDefaultAsync()) != null;
         }
     }
 }

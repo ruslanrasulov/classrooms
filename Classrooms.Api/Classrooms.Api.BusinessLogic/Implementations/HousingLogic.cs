@@ -65,5 +65,10 @@ namespace Classrooms.Api.BusinessLogic.Implementations
 
             return await _housingsDao.UpdateAsync(housing);
         }
+
+        public async Task<bool> IsHousingExists(int number, string exceptHousingId)
+        {
+            return await _housingsDao.IsHousingExists(number, exceptHousingId);
+        }
     }
 }

@@ -8,6 +8,10 @@ namespace Classrooms.Api.DataAccess.Interfaces
     {
         Task<Auditorium> GetById(string housingId, string auditoriumId);
 
+        Task<bool> IsAuditoriumExists(string housingId, int number);
+
+        Task<bool> IsAuditoriumExists(string housingId, int number, string exceptAuditoriumId);
+
         Task<IEnumerable<Auditorium>> GetAllAsync(string housingId);
 
         Task<IEnumerable<AuditoriumDetailedInfo>> GetDetailedInfoAsync();

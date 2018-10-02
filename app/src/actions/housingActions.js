@@ -70,7 +70,6 @@ export const updateForm = form => ({
 export const addHousing = (housing, callback) => dispatch => {
     axios.post('http://localhost:50505/api/housings/', housing)
         .then(result => {
-            dispatch(setErrorMessage('suskek'));
             callback();
         })
         .catch(error => {

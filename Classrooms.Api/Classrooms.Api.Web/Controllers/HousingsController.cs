@@ -125,6 +125,11 @@ namespace Classrooms.Api.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (await _auditoriumLogic.IsAuditoriumExists(createAuditoriumsVm.HousingId, createAuditoriumsVm.Number))
+                {
+                    return BadRequest("Auditorium with that number is already exists");
+                }
+
                 var auditorium = _mapper.Map<CreateAuditoriumsVm, Auditorium>(createAuditoriumsVm);
                 var result = await _auditoriumLogic.AddAsync(auditorium);
 
@@ -144,6 +149,11 @@ namespace Classrooms.Api.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (await _housingLogic.IsHousingExists(editHousingVm.Number, editHousingVm.Id))
+                {
+                    return BadRequest("Housing with that number is already exists");
+                }
+
                 var housing = _mapper.Map<EditHousingVm, Housing>(editHousingVm);
                 var result = await _housingLogic.UpdateAsync(housing);
 
@@ -158,6 +168,14 @@ namespace Classrooms.Api.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (await _auditoriumLogic.IsAuditoriumExists(
+                    editAuditoriumVm.HousingId, 
+                    editAuditoriumVm.Number, 
+                    editAuditoriumVm.Id))
+                {
+                    return BadRequest("Auditorium with that number is already exists");
+                }
+
                 var auditorium = _mapper.Map<EditAuditoriumVm, Auditorium>(editAuditoriumVm);
                 var result = await _auditoriumLogic.UpdateAsync(auditorium);
 

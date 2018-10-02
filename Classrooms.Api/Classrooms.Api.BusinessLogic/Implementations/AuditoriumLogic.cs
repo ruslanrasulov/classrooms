@@ -60,5 +60,15 @@ namespace Classrooms.Api.BusinessLogic.Implementations
 
             return await _auditoriumDao.UpdateAsync(auditorium);
         }
+
+        public async Task<bool> IsAuditoriumExists(string housingId, int number)
+        {
+            return await _auditoriumDao.IsAuditoriumExists(housingId, number);
+        }
+
+        public async Task<bool> IsAuditoriumExists(string housingId, int number, string exceptAuditoriumId)
+        {
+            return await _auditoriumDao.IsAuditoriumExists(housingId, number, exceptAuditoriumId);
+        }
     }
 }

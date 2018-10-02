@@ -10,6 +10,8 @@ namespace Classrooms.Api.BusinessLogic.Interfaces
 
         Task<bool> IsHousingExists(int number);
 
+        Task<bool> IsHousingExists(int number, string exceptHousingId);
+
         Task<IEnumerable<Housing>> GetAllAsync();
 
         Task<IEnumerable<HousingDetailedInfo>> GetDetailedInfoAsync();

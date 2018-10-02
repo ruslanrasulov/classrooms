@@ -51,8 +51,10 @@ const housingReducer = (state = {}, action) => {
             return {
                 ...state,
                 form: {
+                    ...state.form,
                     validationMessage: message
-                }
+                },
+                isLoading: false
             }
         }
         case actionTypes.HOUSING_EDIT_FILL_FORM_START: {

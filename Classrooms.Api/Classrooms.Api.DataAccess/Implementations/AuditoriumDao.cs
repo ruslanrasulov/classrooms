@@ -117,5 +117,27 @@ namespace Classrooms.Api.DataAccess.Implementations
 
             return auditoriumForUpdate;
         }
+
+        public async Task<bool> IsAuditoriumExists(string housingId, int number)
+        {
+            var filter = Builders<Housing>.Filter.ElemMatch(
+                f => f.Auditoriums,
+                f => string.Equals(f.HousingId, housingId) && f.Number == number);
+
+            return (await Housings
+                .Find(filter)
+                .FirstOrDefaultAsync()) != null;
+        }
+
+        public async Task<bool> IsAuditoriumExists(string housingId, int number, string exceptAuditoriumId)
+        {
+            var filter = Builders<Housing>.Filter.ElemMatch(
+                f => f.Auditoriums,
+                f => string.Equals(f.HousingId, housingId) && !string.Equals(f.Id, exceptAuditoriumId) && f.Number == number);
+
+            return (await Housings
+                .Find(filter)
+                .FirstOrDefaultAsync()) != null;
+        }
     }
 }
