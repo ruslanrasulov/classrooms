@@ -3,7 +3,6 @@ using AutoMapper;
 using Classrooms.Api.BusinessLogic.Interfaces;
 using Classrooms.Api.Domain.Entities;
 using Classrooms.Api.Web.Extensions;
-using Classrooms.Api.Web.Models.Auditoriums;
 using Classrooms.Api.Web.Models.Housings;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,53 +12,21 @@ namespace Classrooms.Api.Web.Controllers
     public class HousingsController : Controller
     {
         private readonly IHousingLogic _housingLogic;
-        private readonly IAuditoriumLogic _auditoriumLogic;
         private readonly IMapper _mapper;
 
-        public HousingsController(IHousingLogic housingLogic, IAuditoriumLogic auditoriumLogic, IMapper mapper)
+        public HousingsController(IHousingLogic housingLogic, IMapper mapper)
         {
             _housingLogic = housingLogic;
-            _auditoriumLogic = auditoriumLogic;
             _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAll()
         {
             var housings = await _housingLogic.GetAllAsync();
             var housingVms = _mapper.MapEnumerable<Housing, HousingVm>(housings);
 
             return Ok(housingVms);
-        }
-
-        [HttpGet("{housingId}/auditoriums")]
-        public async Task<IActionResult> GetAuditoriums(string housingId)
-        {
-            var auditoriumds = await _auditoriumLogic.GetAllAsync(housingId);
-
-            if (auditoriumds == null)
-            {
-                return NotFound();
-            }
-
-            var auditoriumVms = _mapper.MapEnumerable<Auditorium, AuditoriumVm>(auditoriumds);
-
-            return Ok(auditoriumVms);
-        }
-
-        [HttpGet("{housingId}/auditoriums/{auditoriumId}")]
-        public async Task<IActionResult> GetByAuditoriumId(string housingId, string auditoriumId)
-        {
-            var result = await _auditoriumLogic.GetById(housingId, auditoriumId);
-
-            if (result == null)
-            {
-                return NotFound();
-            }
-
-            var auditorium = _mapper.Map<Auditorium, AuditoriumVm>(result);
-
-            return Ok(auditorium);
         }
 
         [HttpGet("{id}")]
@@ -91,17 +58,8 @@ namespace Classrooms.Api.Web.Controllers
             return Ok(detailedInfo);
         }
 
-        [HttpGet("auditoriums/detailed")]
-        public async Task<IActionResult> GetAuditoriumsDetailedInfo()
-        {
-            var result = await _auditoriumLogic.GetDetailedInfoAsync();
-            var auditoriums = _mapper.MapEnumerable<AuditoriumDetailedInfo, AuditoriumDetailedInfoVm>(result);
-
-            return Ok(auditoriums);
-        }
-
         [HttpPost]
-        public async Task<IActionResult> AddHousing([FromBody]CreateHousingVm createHousingVm)
+        public async Task<IActionResult> Create([FromBody]CreateHousingVm createHousingVm)
         {
             if (ModelState.IsValid)
             {
@@ -120,33 +78,14 @@ namespace Classrooms.Api.Web.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpPost("{housingId}/auditoriums")]
-        public async Task<IActionResult> AddAuditorium([FromBody]CreateAuditoriumsVm createAuditoriumsVm)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Edit([FromBody]EditHousingVm editHousingVm, string id)
         {
-            if (ModelState.IsValid)
+            if (!string.Equals(id, editHousingVm.Id))
             {
-                if (await _auditoriumLogic.IsAuditoriumExists(createAuditoriumsVm.HousingId, createAuditoriumsVm.Number.Value))
-                {
-                    return BadRequest("Auditorium with that number is already exists");
-                }
-
-                var auditorium = _mapper.Map<CreateAuditoriumsVm, Auditorium>(createAuditoriumsVm);
-                var result = await _auditoriumLogic.AddAsync(auditorium);
-
-                if (result == null)
-                {
-                    return BadRequest();
-                }
-
-                return Created($"api/housings/{result.HousingId}/auditoriums/{result.Id}", result);
+                return BadRequest("Housing ids must be same");
             }
 
-            return BadRequest(ModelState);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Edit([FromBody]EditHousingVm editHousingVm)
-        {
             if (ModelState.IsValid)
             {
                 if (await _housingLogic.IsHousingExists(editHousingVm.Number.Value, editHousingVm.Id))
@@ -163,28 +102,6 @@ namespace Classrooms.Api.Web.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpPut("{housingId}/auditoriums/{auditoriumId}")]
-        public async Task<IActionResult> EditAuditorium([FromBody]EditAuditoriumVm editAuditoriumVm)
-        {
-            if (ModelState.IsValid)
-            {
-                if (await _auditoriumLogic.IsAuditoriumExists(
-                    editAuditoriumVm.HousingId, 
-                    editAuditoriumVm.Number.Value, 
-                    editAuditoriumVm.Id))
-                {
-                    return BadRequest("Auditorium with that number is already exists");
-                }
-
-                var auditorium = _mapper.Map<EditAuditoriumVm, Auditorium>(editAuditoriumVm);
-                var result = await _auditoriumLogic.UpdateAsync(auditorium);
-
-                return Ok(result);
-            }
-
-            return BadRequest(ModelState);
-        }
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> Remove(string id)
         {
@@ -194,14 +111,6 @@ namespace Classrooms.Api.Web.Controllers
             }
 
             await _housingLogic.RemoveAsync(new Housing { Id = id });
-
-            return Ok();
-        }
-
-        [HttpDelete("{housingId}/auditoriums/{auditoriumId}")]
-        public async Task<IActionResult> RemoveAuditorium(string housingId, string auditoriumId)
-        {
-            await _auditoriumLogic.RemoveAsync(new Auditorium { Id = auditoriumId, HousingId = housingId });
 
             return Ok();
         }
