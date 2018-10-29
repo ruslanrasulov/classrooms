@@ -1,9 +1,13 @@
-﻿namespace Classrooms.Api.Web.Models.Housings
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Classrooms.Api.Web.Models.Housings
 {
     public class EditHousingVm
     {
+        [Required]
         public string Id { get; set; }
 
-        public int Number { get; set; }
+        [Required]
+        public int? Number { get; set; }
     }
 }

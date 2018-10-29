@@ -1,17 +1,25 @@
-﻿namespace Classrooms.Api.Web.Models.Auditoriums
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Classrooms.Api.Web.Models.Auditoriums
 {
     public class EditAuditoriumVm
     {
+        [Required]
         public string Id { get; set; }
 
+        [Required]
         public string HousingId { get; set; }
 
-        public int Number { get; set; }
+        [Required]
+        public int? Number { get; set; }
 
-        public int Capacity { get; set; }
+        [Required]
+        public int? Capacity { get; set; }
 
-        public int Floor { get; set; }
+        [Required]
+        public int? Floor { get; set; }
 
-        public int Type { get; set; }
+        [Required]
+        public int? Type { get; set; }
     }
 }

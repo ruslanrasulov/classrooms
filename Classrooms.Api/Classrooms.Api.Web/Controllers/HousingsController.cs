@@ -125,7 +125,7 @@ namespace Classrooms.Api.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (await _auditoriumLogic.IsAuditoriumExists(createAuditoriumsVm.HousingId, createAuditoriumsVm.Number))
+                if (await _auditoriumLogic.IsAuditoriumExists(createAuditoriumsVm.HousingId, createAuditoriumsVm.Number.Value))
                 {
                     return BadRequest("Auditorium with that number is already exists");
                 }
@@ -149,7 +149,7 @@ namespace Classrooms.Api.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (await _housingLogic.IsHousingExists(editHousingVm.Number, editHousingVm.Id))
+                if (await _housingLogic.IsHousingExists(editHousingVm.Number.Value, editHousingVm.Id))
                 {
                     return BadRequest("Housing with that number is already exists");
                 }
@@ -170,7 +170,7 @@ namespace Classrooms.Api.Web.Controllers
             {
                 if (await _auditoriumLogic.IsAuditoriumExists(
                     editAuditoriumVm.HousingId, 
-                    editAuditoriumVm.Number, 
+                    editAuditoriumVm.Number.Value, 
                     editAuditoriumVm.Id))
                 {
                     return BadRequest("Auditorium with that number is already exists");
