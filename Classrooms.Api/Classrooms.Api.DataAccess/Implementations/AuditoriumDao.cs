@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Classrooms.Api.DataAccess.Extensions;
 using Classrooms.Api.DataAccess.Interfaces;
 using Classrooms.Api.DataAccess.Settings;
 using Classrooms.Api.Domain.Entities;
@@ -94,28 +92,11 @@ namespace Classrooms.Api.DataAccess.Implementations
 
         public async Task<Auditorium> UpdateAsync(Auditorium auditorium)
         {
-            var filter = Builders<Housing>.Filter.Eq("Id", auditorium.HousingId);
-            var housing = await Housings.Find(filter).FirstOrDefaultAsync();
+            var housing = await Housings.FindOneAndUpdateAsync(
+                c => string.Equals(c.Id, auditorium.HousingId) && c.Auditoriums.Any(a => string.Equals(a.Id, auditorium.Id)),
+                Builders<Housing>.Update.Set(c => c.Auditoriums.ElementAt(-1), auditorium)); //-1 means first matching element of nested array
 
-            if (housing == null || housing.Auditoriums?.Count == 0)
-            {
-                return null;
-            }
-
-            var auditoriumForUpdate = housing.Auditoriums.FirstOrDefault(a => string.Equals(a.Id, auditorium.Id));
-
-            if (auditoriumForUpdate == null)
-            {
-                return null;
-            }
-
-            auditoriumForUpdate.Number = auditorium.Number;
-            auditoriumForUpdate.Floor = auditorium.Floor;
-            auditoriumForUpdate.Type = auditorium.Type;
-
-            await Housings.ReplaceOneAsync(h => string.Equals(h.Id, housing.Id), housing);
-
-            return auditoriumForUpdate;
+            return housing.Auditoriums.FirstOrDefault(c => string.Equals(c.Id, auditorium.Id));
         }
 
         public async Task<bool> IsAuditoriumExists(string housingId, int number)

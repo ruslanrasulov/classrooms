@@ -35,9 +35,9 @@ namespace Classrooms.Api.DataAccess.Implementations
         public async Task<bool> IsHousingExists(int number)
         {
             var filter = Builders<Housing>.Filter.Eq("Number", number);
-            return (await Housings
+            return await Housings
                 .Find(filter)
-                .FirstOrDefaultAsync()) != null;
+                .FirstOrDefaultAsync() != null;
         }
 
         public async Task<IEnumerable<Housing>> GetAllAsync()
@@ -139,9 +139,9 @@ namespace Classrooms.Api.DataAccess.Implementations
             var filter = Builders<Housing>.Filter.Eq("Number", number)
                 & Builders<Housing>.Filter.Ne("Id", exceptHousingId);
 
-            return (await Housings
+            return await Housings
                 .Find(filter)
-                .FirstOrDefaultAsync()) != null;
+                .FirstOrDefaultAsync() != null;
         }
     }
 }

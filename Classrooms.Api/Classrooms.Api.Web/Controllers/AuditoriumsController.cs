@@ -93,10 +93,12 @@ namespace Classrooms.Api.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                if (await _auditoriumLogic.IsAuditoriumExists(
-                    editAuditoriumVm.HousingId,
-                    editAuditoriumVm.Number.Value,
-                    editAuditoriumVm.Id))
+                var isAuditoriumExists = await _auditoriumLogic.IsAuditoriumExists(
+                        editAuditoriumVm.HousingId,
+                        editAuditoriumVm.Number.Value,
+                        editAuditoriumVm.Id);
+
+                if (isAuditoriumExists)
                 {
                     return BadRequest("Auditorium with that number is already exists");
                 }

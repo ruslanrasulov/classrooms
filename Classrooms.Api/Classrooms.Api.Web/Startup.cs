@@ -33,7 +33,8 @@ namespace Classrooms.Api.Web
 
             services.AddCors(o => o.AddPolicy("Policy", builder =>
             {
-                builder.AllowAnyOrigin()
+                builder
+                    .AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             }));
