@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import spinner from './../../images/spinner.gif';
+import { getLoading } from '../../selectors/loadingSelectors';
 import { 
     fillForm, 
     updateForm, 
@@ -7,7 +9,6 @@ import {
     addHousing, 
     editHousing 
 } from '../../actions/housingActions';
-import spinner from './../../images/spinner.gif';
 
 class HousingForm extends Component {
     componentDidMount() {
@@ -50,11 +51,11 @@ class HousingForm extends Component {
     }
 
     render() {
-        const { number, validationMessage, isLoading } = this.props;
+        const { number, validationMessage, loading } = this.props;
 
         return (
             <div>
-                {isLoading ? 
+                {loading ? 
                     <img src={spinner} alt="spinner" className="spinner"/> :
                     <form className="housing-form" onSubmit={this.handleSubmit}>
                         <input type="hidden" name="housing-id" />
@@ -79,7 +80,7 @@ class HousingForm extends Component {
 }
 
 const mapStateToProps = state => ({
-    isLoading: state.housings.isLoading,
+    loading: getLoading(state),
     number: state.housings.form.number,
     form: state.housings.form,
     validationMessage: state.housings.form.validationMessage

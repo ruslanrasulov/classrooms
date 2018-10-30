@@ -5,6 +5,7 @@ import { fetchAuditoriums, removeAuditorium } from './../../actions/auditoriumAc
 import Modal from '../modal';
 import spinner from './../../images/spinner.gif';
 import './_styles.scss';
+import { getLoading } from '../../selectors/loadingSelectors';
 
 class AuditoriumsList extends Component {
     state = {
@@ -49,7 +50,7 @@ class AuditoriumsList extends Component {
 
     render() {
         const { 
-            isLoading, 
+            loading, 
             auditoriums,
             match: { params: { housingId } }
         } = this.props;
@@ -57,7 +58,7 @@ class AuditoriumsList extends Component {
 
         return (
             <div>
-                {isLoading ? 
+                {loading ? 
                     <img src={spinner} alt="spinner" className="spinner"/> : 
                     <div className="auditoriums">
                     <nav className="auditoriums__nav">
@@ -102,7 +103,7 @@ class AuditoriumsList extends Component {
 };
 
 const mapStateToProps = state => ({
-    isLoading: state.auditoriums.isLoading,
+    loading: getLoading(state),
     auditoriums: state.auditoriums.auditoriumList
 });
 

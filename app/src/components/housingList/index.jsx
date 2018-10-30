@@ -5,6 +5,7 @@ import { removeHousing, fetchHousings } from './../../actions/housingActions';
 import Modal from './../modal';
 import spinner from  './../../images/spinner.gif';
 import './_styles.scss';
+import { getLoading } from './../../selectors/loadingSelectors';
 
 class HousingList extends Component {
     state = {
@@ -34,12 +35,12 @@ class HousingList extends Component {
     }
 
     render() {
-        const { housings, isLoading } = this.props;
+        const { housings, loading } = this.props;
         const { housingId } = this.state;
         
         return (
             <div className="housing-list">
-                {isLoading ? 
+                {loading ? 
                     <img src={spinner} alt="spinner" className="spinner"/> :
                     <div>
                         <nav className="housing-list__nav">
@@ -91,7 +92,7 @@ class HousingList extends Component {
 
 const mapStateToProps = state => ({
     housings: state.housings.housingList,
-    isLoading: state.housings.isLoading
+    loading: getLoading(state)
 });
 
 const mapDispatchToProps = dispatch => ({

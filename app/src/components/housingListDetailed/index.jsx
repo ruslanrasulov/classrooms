@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchDetailedInfo } from './../../actions/housingActions';
 import spinner from  './../../images/spinner.gif';
+import { getLoading } from '../../selectors/loadingSelectors';
 
 class HousingListDetailed extends Component {
     componentDidMount() {
@@ -22,11 +23,11 @@ class HousingListDetailed extends Component {
     }
 
     render() {
-        const { detailedInfo, isLoading } = this.props;
+        const { detailedInfo, loading } = this.props;
 
         return (
             <div>
-                {isLoading ? 
+                {loading ? 
                     <img src={spinner} alt="spinner" className="spinner"/> :
                     <div>
                         <table>
@@ -53,7 +54,7 @@ class HousingListDetailed extends Component {
 
 const mapStateToProps = state => ({
     detailedInfo: state.housings.detailedInfo,
-    isLoading: state.housings.isLoading
+    loading: getLoading(state)
 });
 
 const mapDispatchToProps = dispatch => ({

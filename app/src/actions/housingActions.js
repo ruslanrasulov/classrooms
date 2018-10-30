@@ -4,22 +4,20 @@ import * as actionTypes from './actionTypes';
 export const fetchHousings = () => dispatch => {
     dispatch(fetchHousingsStart());
 
-    axios.get('http://localhost:50505/api/housings').then((housings) => {
-        dispatch(fetchHousingsComplete(housings.data));
-    }).catch((error) => console.log(error));
+    axios.get('http://localhost:50505/api/housings')
+        .then((housings) => {
+            dispatch(fetchHousingsComplete(housings.data));
+        })
+        .catch((error) => console.error(error));
 };
 
 export const fetchHousingsStart = () => ({
-    type: actionTypes.FETCH_HOUSINGS_START,
-    payload: { isLoading: true }
+    type: actionTypes.FETCH_HOUSINGS_START
 });
 
 export const fetchHousingsComplete = (housingList) => ({
     type: actionTypes.FETCH_HOUSINGS_COMPLETE,
-    payload: {
-        isLoading: false,
-        housingList: housingList
-    }
+    payload: { housingList }
 });
 
 export const fetchDetailedInfo = () => dispatch => {
@@ -29,37 +27,31 @@ export const fetchDetailedInfo = () => dispatch => {
         .then(({ data }) => {
             dispatch(fetchDetailedInfoComplete(data));
         })
+        .catch(error => console.error(error));
 };
 
 export const fetchDetailedInfoStart = () => ({
-    type: actionTypes.FECTH_HOUSINGS_INFO_START,
-    payload: {
-        isLoading: true
-    }
+    type: actionTypes.FECTH_HOUSINGS_INFO_START
 });
 
 export const fetchDetailedInfoComplete = (detailedInfo) => ({
     type: actionTypes.FETCH_HOUSINGS_INFO_COMPLETE,
-    payload: {
-        isLoading: false,
-        detailedInfo
-    }
+    payload: { detailedInfo }
 });
 
-export const removeHousing = (id) => dispatch => (
+export const removeHousing = (id) => dispatch => {
     axios.delete(`http://localhost:50505/api/housings/${id}`)
         .then(result => {
             if (result.status === 200) {
                 dispatch(fetchHousings());
             }
         })
-);
+        .catch(error => console.error(error));
+};
 
 export const removeHousingComplete = id => ({
     type: actionTypes.REMOVE_HOUSING,
-    payload: {
-        id
-    }
+    payload: { id }
 });
 
 export const updateForm = form => ({
@@ -74,8 +66,8 @@ export const addHousing = (housing, callback) => dispatch => {
         })
         .catch(error => {
             dispatch(setErrorMessage(error.response.data));
-        })
-}
+        });
+};
 
 export const editHousing = (housing, callback) => dispatch => {
     dispatch(editHousingStart());
@@ -87,8 +79,8 @@ export const editHousing = (housing, callback) => dispatch => {
         })
         .catch(error => {
             dispatch(setErrorMessage(error.response.data));
-        })
-}
+        });
+};
 
 export const editHousingStart = () => ({
     type: actionTypes.HOUSING_EDIT_START
@@ -100,10 +92,8 @@ export const editHousingComplete = () => ({
 
 export const setErrorMessage = message => ({
     type: actionTypes.HOUSING_FORM_ERROR_MESSAGE,
-    payload: {
-        message
-    }
-})
+    payload: { message }
+});
 
 export const fillForm = id => dispatch => {
     dispatch(fillFormStart());
@@ -112,7 +102,8 @@ export const fillForm = id => dispatch => {
         .then(result => {
             dispatch(fillFormComplete(result.data));
         })
-}
+        .catch(error => console.error(error));
+};
 
 export const fillFormStart = () => ({
     type: actionTypes.HOUSING_EDIT_FILL_FORM_START
@@ -120,9 +111,7 @@ export const fillFormStart = () => ({
 
 export const fillFormComplete = housing => ({
     type: actionTypes.HOUSING_EDIT_FILL_FORM_COMPLETE,
-    payload: {
-        housing
-    }
+    payload: { housing }
 });
 
 export const resetForm = () => ({

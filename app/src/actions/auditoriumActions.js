@@ -7,22 +7,17 @@ export const fetchAuditoriums = (housingId) => dispatch => {
     axios.get(`http://localhost:50505/api/housings/${housingId}/auditoriums`)
         .then(({ data }) => {
             dispatch(fetchAuditoriumsComplete(data));
-        });
+        })
+        .catch(error => console.error(error))
 };
 
 export const fetchAuditoriumsStart = () => ({
-    type: actionTypes.FETCH_AUDITORIUMS_START,
-    payload: {
-        isLoading: true
-    }
+    type: actionTypes.FETCH_AUDITORIUMS_START
 });
 
 export const fetchAuditoriumsComplete = auditoriumList => ({
     type: actionTypes.FETCH_AUDITORIUMS_COMPLETE,
-    payload: {
-        auditoriumList,
-        isLoading: false
-    }
+    payload: { auditoriumList }
 });
 
 export const fetchDetailedInfo = () => dispatch => {
@@ -32,21 +27,16 @@ export const fetchDetailedInfo = () => dispatch => {
         .then(({ data }) => {
             dispatch(fetchDetailedInfoComplete(data));
         })
+        .catch(error => console.error(error));
 }
 
 export const fetchDetailedInfoStart = () => ({
-    type: actionTypes.FETCH_AUDITORIUMS_INFO_START,
-    payload: {
-        isLoading: true
-    }
+    type: actionTypes.FETCH_AUDITORIUMS_INFO_START
 });
 
 export const fetchDetailedInfoComplete = (detailedInfo) => ({
     type: actionTypes.FETCH_AUDITORIUMS_INFO_COMPLETE,
-    payload: {
-        detailedInfo,
-        isLoading: false
-    }
+    payload: { detailedInfo }
 });
 
 export const addAuditorium = (auditorium, callback) => dispatch => {
@@ -76,16 +66,12 @@ export const resetForm = () => ({
 
 export const updateForm = form => ({
     type: actionTypes.AUDITORIUM_FORM_UPDATE,
-    payload: {
-        form
-    }
+    payload: { form }
 });
 
 export const setErrorMessage = message => ({
     type: actionTypes.AUDITORIUM_FORM_SET_ERROR_MESSAGE,
-    payload: {
-        validationMessage: message
-    }
+    payload: { validationMessage: message }
 });
 
 export const fillForm = (housingId, auditoriumId) => dispatch => {
@@ -94,7 +80,8 @@ export const fillForm = (housingId, auditoriumId) => dispatch => {
     axios.get(`http://localhost:50505/api/housings/${housingId}/auditoriums/${auditoriumId}`)
         .then(result => {
             dispatch(fillFormComplete(result.data));
-        });
+        })
+        .catch(error => console.error(error));
 };
 
 export const fillFormStart = () => ({
@@ -103,9 +90,7 @@ export const fillFormStart = () => ({
 
 export const fillFormComplete = auditorium => ({
     type: actionTypes.AUDITORIUM_EDIT_FILL_FORM_COMPLETE,
-    payload: {
-        auditorium
-    }
+    payload: { auditorium }
 });
 
 export const editAuditorium = (auditorium, callback) => dispatch => {
@@ -133,5 +118,6 @@ export const removeAuditorium = (housingId, auditoriumId) => dispatch => {
     axios.delete(`http://localhost:50505/api/housings/${housingId}/auditoriums/${auditoriumId}`)
         .then(result => {
             dispatch(fetchAuditoriums(housingId));
-        });
+        })
+        .catch(error => console.error(error));
 };

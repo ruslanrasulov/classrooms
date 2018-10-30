@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchDetailedInfo } from './../../actions/auditoriumActions';
 import spinner from  './../../images/spinner.gif';
+import { getLoading } from '../../selectors/loadingSelectors';
 
 class AuditoriumsListDetailed extends Component {
     typeMapping = {
@@ -15,11 +16,11 @@ class AuditoriumsListDetailed extends Component {
     }
 
     render() {
-        const { isLoading, detailedInfo } = this.props;
+        const { loading, detailedInfo } = this.props;
 
         return (
             <div>
-                {isLoading ?
+                {loading ?
                     <img src={spinner} alt="spinner" className="spinner"/> :
                     <table>
                         <thead>
@@ -50,7 +51,7 @@ class AuditoriumsListDetailed extends Component {
 
 const mapStateToProps = state => ({
     detailedInfo: state.auditoriums.detailedInfo,
-    fetchDetailed: state.auditoriums.isLoading
+    loading: getLoading(state)
 });
 
 const mapDispatchToProps = dispatch => ({

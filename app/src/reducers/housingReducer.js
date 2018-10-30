@@ -4,36 +4,19 @@ const housingReducer = (state = {}, action) => {
     const actionType = action.type;
     
     switch (actionType) {
-        case actionTypes.FETCH_HOUSINGS_START: {
-            const { isLoading } = action.payload;
-            return {
-                isLoading,
-                ...state
-            }
-        }
         case actionTypes.FETCH_HOUSINGS_COMPLETE: {
-            const { housingList, isLoading } = action.payload;
+            const { housingList } = action.payload;
 
             return {
                 ...state,
-                housingList,
-                isLoading,
-            };
-        }
-        case actionTypes.FECTH_HOUSINGS_INFO_START: {
-            const { isLoading } = action.payload;
-            
-            return {
-                ...state,
-                isLoading
+                housingList
             };
         }
         case actionTypes.FETCH_HOUSINGS_INFO_COMPLETE: {
-            const { detailedInfo, isLoading } = action.payload;
+            const { detailedInfo } = action.payload;
             
             return {
                 ...state,
-                isLoading,
                 detailedInfo
             };
         }
@@ -53,14 +36,7 @@ const housingReducer = (state = {}, action) => {
                 form: {
                     ...state.form,
                     validationMessage: message
-                },
-                isLoading: false
-            }
-        }
-        case actionTypes.HOUSING_EDIT_FILL_FORM_START: {
-            return {
-                ...state,
-                isLoading: true
+                }
             }
         }
         case actionTypes.HOUSING_EDIT_FILL_FORM_COMPLETE: {
@@ -68,27 +44,13 @@ const housingReducer = (state = {}, action) => {
 
             return {
                 ...state,
-                isLoading: false,
                 form: housing
             }
         }
         case actionTypes.HOUSING_RESET_FORM: {
             return {
                 ...state,
-                isLoading: false,
                 form: { }
-            }
-        }
-        case actionTypes.HOUSING_EDIT_START: {
-            return {
-                ...state,
-                isLoading: true
-            }
-        }
-        case actionTypes.HOUSING_EDIT_COMPLETE: {
-            return {
-                ...state,
-                isLoading: false
             }
         }
         default: {

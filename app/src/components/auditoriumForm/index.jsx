@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { addAuditorium, resetForm, updateForm, fillForm, editAuditorium } from '../../actions/auditoriumActions';
 import { connect } from 'react-redux';
 import spinner from './../../images/spinner.gif';
+import { getLoading } from '../../selectors/loadingSelectors';
 
 class AuditoriumForm extends Component {
     componentDidMount = () => {
@@ -59,11 +60,11 @@ class AuditoriumForm extends Component {
     }
 
     render() {
-        const { isLoading, number, capacity, floor, type, validationMessage } = this.props;
+        const { loading, number, capacity, floor, type, validationMessage } = this.props;
 
         return (
             <div>
-                {isLoading ?
+                {loading ?
                     <img src={spinner} alt="spinner" className="spinner"/> :
                     <form onSubmit={this.handleSubmit} className="auditorium-form">
                         <div>
@@ -121,7 +122,7 @@ class AuditoriumForm extends Component {
 }
 
 const mapStateToProps = state => ({
-    isLoading: state.auditoriums.isLoading,
+    loading: getLoading(state),
     number: state.auditoriums.form.number,
     capacity: state.auditoriums.form.capacity,
     floor: state.auditoriums.form.floor,

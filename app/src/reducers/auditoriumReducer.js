@@ -1,41 +1,22 @@
-import initialState from './initialState';
 import * as actionTypes from '../actions/actionTypes';
 
 const auditoriumReducer = (state = {}, action) => {
     const actionType = action.type;
 
     switch (actionType) {
-        case actionTypes.FETCH_AUDITORIUMS_START: {
-            const { isLoading } = action.payload;
-
-            return {
-                ...state,
-                isLoading
-            };
-        }
         case actionTypes.FETCH_AUDITORIUMS_COMPLETE: {
-            const { auditoriumList, isLoading } = action.payload;
+            const { auditoriumList } = action.payload;
             
             return {
                 ...state,
-                auditoriumList,
-                isLoading
-            };
-        }
-        case actionTypes.FETCH_AUDITORIUMS_INFO_START: {
-            const { isLoading } = action.payload;
-
-            return {
-                ...state,
-                isLoading
+                auditoriumList
             };
         }
         case actionTypes.FETCH_AUDITORIUMS_INFO_COMPLETE: {
-            const { detailedInfo, isLoading } = action.payload;
+            const { detailedInfo } = action.payload;
 
             return {
                 ...state,
-                isLoading,
                 detailedInfo
             };
         }
@@ -53,21 +34,8 @@ const auditoriumReducer = (state = {}, action) => {
         case actionTypes.AUDITORIUM_FORM_RESET: {
             return {
                 ...state,
-                form: { },
-                isLoading: false
+                form: { }
             };
-        }
-        case actionTypes.AUDITORIUM_ADD_START: {
-            return {
-                ...state,
-                isLoading: true
-            }
-        }
-        case actionTypes.AUDITORIUM_ADD_COMPLETE: {
-            return {
-                ...state,
-                isLoading: false
-            }
         }
         case actionTypes.AUDITORIUM_FORM_SET_ERROR_MESSAGE: {
             const { validationMessage } = action.payload;
@@ -77,26 +45,7 @@ const auditoriumReducer = (state = {}, action) => {
                 form: {
                     ...state.form,
                     validationMessage
-                },
-                isLoading: false
-            };
-        }
-        case actionTypes.AUDITORIUM_EDIT_START: {
-            return {
-                ...state,
-                isLoading: true
-            };
-        }
-        case actionTypes.AUDITORIUM_EDIT_COMPLETE: {
-            return {
-                ...state,
-                isLoading: false
-            };
-        }
-        case actionTypes.AUDITORIUM_EDIT_FILL_FORM_START: {
-            return {
-                ...state,
-                isLoading: true
+                }
             };
         }
         case actionTypes.AUDITORIUM_EDIT_FILL_FORM_COMPLETE: {
@@ -104,8 +53,7 @@ const auditoriumReducer = (state = {}, action) => {
 
             return {
                 ...state,
-                form: auditorium,
-                isLoading: false,
+                form: auditorium
             };
         }
     }
