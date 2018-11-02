@@ -3,14 +3,10 @@ import { connect } from 'react-redux';
 import { fetchDetailedInfo } from './../../actions/auditoriumActions';
 import spinner from  './../../images/spinner.gif';
 import { getLoading } from '../../selectors/loadingSelectors';
+import typeMapping from '../../utils/auditoriumTypes.enum';
+import { getDetailedInfo } from '../../selectors/auditoriumSelectors';
 
 class AuditoriumsListDetailed extends Component {
-    typeMapping = {
-        0: 'Lecture',
-        1: 'Computer',
-        2: 'Laboratory'
-    };
-
     componentDidMount() {
         this.props.loadDetailedInfo();
     }
@@ -39,7 +35,7 @@ class AuditoriumsListDetailed extends Component {
                                     <th>{a.housingNumber}</th>
                                     <th>{a.floor}</th>
                                     <th>{a.capacity}</th>
-                                    <th>{this.typeMapping[a.type]}</th>
+                                    <th>{typeMapping[a.type]}</th>
                                 </tr>
                             ))}
                         </tbody>
@@ -50,7 +46,7 @@ class AuditoriumsListDetailed extends Component {
 }
 
 const mapStateToProps = state => ({
-    detailedInfo: state.auditoriums.detailedInfo,
+    detailedInfo: getDetailedInfo(state),
     loading: getLoading(state)
 });
 

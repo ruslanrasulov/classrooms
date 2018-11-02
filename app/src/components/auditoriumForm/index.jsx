@@ -3,6 +3,7 @@ import { addAuditorium, resetForm, updateForm, fillForm, editAuditorium } from '
 import { connect } from 'react-redux';
 import spinner from './../../images/spinner.gif';
 import { getLoading } from '../../selectors/loadingSelectors';
+import { getForm } from '../../selectors/auditoriumSelectors';
 
 class AuditoriumForm extends Component {
     componentDidMount = () => {
@@ -27,7 +28,7 @@ class AuditoriumForm extends Component {
 
     handleInput = e => {
         const { name, value } = e.target;
-
+        
         this.props.updateForm({
             [name]: value
         });
@@ -60,7 +61,14 @@ class AuditoriumForm extends Component {
     }
 
     render() {
-        const { loading, number, capacity, floor, type, validationMessage } = this.props;
+        const { 
+            loading, 
+            number, 
+            capacity, 
+            floor, 
+            type, 
+            validationMessage 
+        } = this.props;
 
         return (
             <div>
@@ -121,15 +129,19 @@ class AuditoriumForm extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    loading: getLoading(state),
-    number: state.auditoriums.form.number,
-    capacity: state.auditoriums.form.capacity,
-    floor: state.auditoriums.form.floor,
-    type: state.auditoriums.form.type,
-    validationMessage: state.auditoriums.form.validationMessage,
-    form: state.auditoriums.form
-});
+const mapStateToProps = state => {
+    const form = getForm(state);
+
+    return {
+        loading: getLoading(state),
+        number: form.number,
+        capacity: form.capacity,
+        floor: form.floor,
+        type: form.type,
+        validationMessage: form.validationMessage,
+        form
+    };
+};
 
 const mapDispatchToProps = dispatch => ({
     addAuditorium: (auditorium, callback) => dispatch(addAuditorium(auditorium, callback)),

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import spinner from './../../images/spinner.gif';
 import { getLoading } from '../../selectors/loadingSelectors';
+import { getForm } from '../../selectors/housingSelectors';
 import { 
     fillForm, 
     updateForm, 
@@ -51,7 +52,13 @@ class HousingForm extends Component {
     }
 
     render() {
-        const { number, validationMessage, loading } = this.props;
+        const { 
+            form: { 
+                number, 
+                validationMessage 
+            }, 
+            loading 
+        } = this.props;
 
         return (
             <div>
@@ -81,9 +88,7 @@ class HousingForm extends Component {
 
 const mapStateToProps = state => ({
     loading: getLoading(state),
-    number: state.housings.form.number,
-    form: state.housings.form,
-    validationMessage: state.housings.form.validationMessage
+    form: getForm(state)
 });
 
 const mapDispatchToProps = dispatch => ({

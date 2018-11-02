@@ -50,8 +50,8 @@ namespace Classrooms.Api.Web.Controllers
             return Ok(auditorium);
         }
 
-        [HttpGet("detailed")]
-        public async Task<IActionResult> GetAuditoriumsDetailedInfo()
+        [HttpGet("/api/housings/auditoriums/detailed")]
+        public async Task<IActionResult> GetDetailedInfo()
         {
             var result = await _auditoriumLogic.GetDetailedInfoAsync();
             var auditoriums = _mapper.MapEnumerable<AuditoriumDetailedInfo, AuditoriumDetailedInfoVm>(result);

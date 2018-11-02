@@ -6,6 +6,8 @@ import Modal from '../modal';
 import spinner from './../../images/spinner.gif';
 import './_styles.scss';
 import { getLoading } from '../../selectors/loadingSelectors';
+import typeMapping from '../../utils/auditoriumTypes.enum';
+import { getAuditoriumList } from '../../selectors/auditoriumSelectors';
 
 class AuditoriumsList extends Component {
     state = {
@@ -80,7 +82,7 @@ class AuditoriumsList extends Component {
                                     <th>{a.number}</th>
                                     <th>{a.capacity}</th>
                                     <th>{a.floor}</th>
-                                    <th>{a.type}</th>
+                                    <th>{typeMapping[a.type]}</th>
                                     <th>
                                         <Link to={`/housings/${housingId}/auditoriums/${a.id}/edit`}>Edit</Link>
                                         <button type="button" onClick={() => this.showModal(a.id)}>Remove</button>
@@ -104,7 +106,7 @@ class AuditoriumsList extends Component {
 
 const mapStateToProps = state => ({
     loading: getLoading(state),
-    auditoriums: state.auditoriums.auditoriumList
+    auditoriums: getAuditoriumList(state)
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -8,7 +8,7 @@ export const fetchAuditoriums = (housingId) => dispatch => {
         .then(({ data }) => {
             dispatch(fetchAuditoriumsComplete(data));
         })
-        .catch(error => console.error(error))
+        .catch(error => console.error(error));
 };
 
 export const fetchAuditoriumsStart = () => ({

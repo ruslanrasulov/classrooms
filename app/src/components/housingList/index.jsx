@@ -6,6 +6,7 @@ import Modal from './../modal';
 import spinner from  './../../images/spinner.gif';
 import './_styles.scss';
 import { getLoading } from './../../selectors/loadingSelectors';
+import { getHousingList } from '../../selectors/housingSelectors';
 
 class HousingList extends Component {
     state = {
@@ -91,7 +92,7 @@ class HousingList extends Component {
 };
 
 const mapStateToProps = state => ({
-    housings: state.housings.housingList,
+    housings: getHousingList(state),
     loading: getLoading(state)
 });
 

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { fetchDetailedInfo } from './../../actions/housingActions';
 import spinner from  './../../images/spinner.gif';
 import { getLoading } from '../../selectors/loadingSelectors';
+import { getDetailedInfo } from '../../selectors/housingSelectors';
 
 class HousingListDetailed extends Component {
     componentDidMount() {
@@ -53,7 +54,7 @@ class HousingListDetailed extends Component {
 }
 
 const mapStateToProps = state => ({
-    detailedInfo: state.housings.detailedInfo,
+    detailedInfo: getDetailedInfo(state),
     loading: getLoading(state)
 });
 
