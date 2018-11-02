@@ -1,57 +1,12 @@
+import { combineReducers } from 'redux';
 import * as actionTypes from '../actions/actionTypes';
 
-const housingReducer = (state = {}, action) => {
-    const actionType = action.type;
-    
-    switch (actionType) {
-        case actionTypes.FETCH_HOUSINGS_COMPLETE: {
-            const { housingList } = action.payload;
-
-            return {
-                ...state,
-                housingList
-            };
-        }
+const detailedInfoReducer = (state = [], action) => {  
+    switch (action.type) {
         case actionTypes.FETCH_HOUSINGS_INFO_COMPLETE: {
             const { detailedInfo } = action.payload;
             
-            return {
-                ...state,
-                detailedInfo
-            };
-        }
-        case actionTypes.HOUSING_FORM_UPDATE: {
-            const { form } = action.payload;
-
-            return {
-                ...state,
-                form
-            }
-        }
-        case actionTypes.HOUSING_FORM_ERROR_MESSAGE: {
-            const { message } = action.payload;
-
-            return {
-                ...state,
-                form: {
-                    ...state.form,
-                    validationMessage: message
-                }
-            }
-        }
-        case actionTypes.HOUSING_EDIT_FILL_FORM_COMPLETE: {
-            const { housing } = action.payload; 
-
-            return {
-                ...state,
-                form: housing
-            }
-        }
-        case actionTypes.HOUSING_RESET_FORM: {
-            return {
-                ...state,
-                form: { }
-            }
+            return detailedInfo;
         }
         default: {
             return state;
@@ -59,4 +14,53 @@ const housingReducer = (state = {}, action) => {
     }
 };
 
-export default housingReducer;
+const housingListReducer = (state = [], action) => {
+    switch (action.type) {
+        case actionTypes.FETCH_HOUSINGS_COMPLETE: {
+            const { housingList } = action.payload;
+
+            return housingList;
+        }
+        default: {
+            return state;
+        }
+    }
+};
+
+const formReducer = (state = {}, action) => {
+    switch (action.type) {
+        case actionTypes.HOUSING_FORM_UPDATE: {
+            const { form } = action.payload;
+
+            return {
+                ...state,
+                ...form
+            };
+        }
+        case actionTypes.HOUSING_FORM_ERROR_MESSAGE: {
+            const { message } = action.payload;
+
+            return {
+                ...state,
+                validationMessage: message
+            };
+        }
+        case actionTypes.HOUSING_EDIT_FILL_FORM_COMPLETE: {
+            const { housing } = action.payload; 
+            
+            return housing;
+        }
+        case actionTypes.HOUSING_RESET_FORM: {
+            return { };
+        }
+        default: {
+            return state;
+        }
+    };
+};
+
+export default combineReducers({
+    housingList: housingListReducer,
+    form: formReducer,
+    detailedInfo: detailedInfoReducer
+});
