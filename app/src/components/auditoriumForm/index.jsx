@@ -67,7 +67,11 @@ class AuditoriumForm extends Component {
             capacity, 
             floor, 
             type, 
-            validationMessage 
+            validationSummary,
+            numberValidation,
+            capacityValidation,
+            floorValidation,
+            typeValidation 
         } = this.props;
 
         return (
@@ -84,6 +88,7 @@ class AuditoriumForm extends Component {
                                 className="auditorium-form__input-number" 
                                 value={number || ''}
                                 onChange={this.handleInput} />
+                            <span className="auditorium-form__validation-message">{numberValidation}</span>
                         </div>
         
                         <div>
@@ -95,6 +100,7 @@ class AuditoriumForm extends Component {
                                 className="auditorium-form__input-capacity"
                                 value={capacity || ''}
                                 onChange={this.handleInput} />
+                            <span className="auditorium-form__validation-message">{capacityValidation}</span>
                         </div>
 
                         <div>
@@ -106,6 +112,7 @@ class AuditoriumForm extends Component {
                                 className="auditorium-form__input-floor"
                                 value={floor || ''}
                                 onChange={this.handleInput} />
+                            <span className="auditorium-form__validation-message">{floorValidation}</span>
                         </div>
         
                         <div>
@@ -120,8 +127,9 @@ class AuditoriumForm extends Component {
                                 <option value="1">Computer</option>
                                 <option value="2">Laboratory</option>
                             </select>
+                            <span className="auditorium-form__validation-message">{typeValidation}</span>
                         </div>
-                        <span className="auditorium-form__validation-message">{validationMessage}</span>
+                        <span className="auditorium-form__validation-message">{validationSummary}</span>
                         <button type="submit" className="auditorium-form__submit-btn">Submit</button>
                     </form>}
             </div>
@@ -138,7 +146,11 @@ const mapStateToProps = state => {
         capacity: form.capacity,
         floor: form.floor,
         type: form.type,
-        validationMessage: form.validationMessage,
+        validationSummary: form.validation.summary,
+        numberValidation: form.validation.number,
+        capacityValidation: form.validation.capacity,
+        floorValidation: form.validation.floor,
+        typeValidation: form.validation.type,
         form
     };
 };

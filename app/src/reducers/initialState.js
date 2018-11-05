@@ -2,12 +2,17 @@ export default {
     auditoriums: {
         auditoriumList: [],
         detailedInfo: [],
-        form: { }
+        form: {
+            type: 0,
+            validation: { }
+        }
     },
     housings: {
         housingList: [],
         detailedInfo: [],
-        form: { }
+        form: {
+            validation: { }
+        }
     },
     loading: false
 };

@@ -1,5 +1,9 @@
 import { combineReducers } from 'redux';
+import initialState from './initialState';
+import { getForm } from '../selectors/auditoriumSelectors';
 import * as actionTypes from '../actions/actionTypes';
+
+const initialForm = getForm(initialState);
 
 const detailedInfoReducer = (state = {}, action) => {
     switch (action.type) {
@@ -31,27 +35,30 @@ const formReducer = (state = {}, action) => {
     switch (action.type) {
         case actionTypes.AUDITORIUM_FORM_UPDATE: {
             const { form } = action.payload;
-
+            
             return {
                 ...state,
                 ...form
             };
         }
         case actionTypes.AUDITORIUM_FORM_RESET: {
-            return { };
+            return initialForm;
         }
         case actionTypes.AUDITORIUM_FORM_SET_ERROR_MESSAGE: {
-            const { validationMessage } = action.payload;
+            const { validation } = action.payload;
 
             return {
                 ...state,
-                validationMessage
+                validation
             };
         }
         case actionTypes.AUDITORIUM_EDIT_FILL_FORM_COMPLETE: {
             const { auditorium } = action.payload;
-
-            return auditorium;
+            
+            return {
+                ...auditorium,
+                validation: initialForm.validation
+            };
         }
         default: {
             return state;

@@ -1,4 +1,5 @@
 import classroomsApi from '../utils/classroomsApi';
+import validateHousing from '../utils/validation/housingValidator';
 import * as actionTypes from './actionTypes';
 
 export const fetchHousings = () => dispatch => {
@@ -60,16 +61,30 @@ export const updateForm = form => ({
 });
 
 export const addHousing = (housing, callback) => dispatch => {
+    const validationMessage = validateHousing(housing);
+
+    if (!validationMessage.isValid) {
+        dispatch(setErrorMessage(validationMessage));
+        return;
+    }
+
     classroomsApi.post('api/housings/', housing)
         .then(result => {
             callback();
         })
         .catch(error => {
-            dispatch(setErrorMessage(error.response.data));
+            dispatch(setErrorMessage({ summary: error.response.data }));
         });
 };
 
 export const editHousing = (housing, callback) => dispatch => {
+    const validationMessage = validateHousing(housing);
+
+    if (!validationMessage.isValid) {
+        dispatch(setErrorMessage(validationMessage));
+        return;
+    }
+
     dispatch(editHousingStart());
 
     classroomsApi.put(`api/housings/${housing.id}`, housing)
@@ -78,7 +93,7 @@ export const editHousing = (housing, callback) => dispatch => {
             callback();
         })
         .catch(error => {
-            dispatch(setErrorMessage(error.response.data));
+            dispatch(setErrorMessage({ summary: error.response.data }));
         });
 };
 
@@ -92,7 +107,7 @@ export const editHousingComplete = () => ({
 
 export const setErrorMessage = message => ({
     type: actionTypes.HOUSING_FORM_ERROR_MESSAGE,
-    payload: { message }
+    payload: { validation: message }
 });
 
 export const fillForm = id => dispatch => {

@@ -53,10 +53,9 @@ class HousingForm extends Component {
 
     render() {
         const { 
-            form: { 
-                number, 
-                validationMessage 
-            }, 
+            number,
+            numberValidation,
+            validationSummary, 
             loading 
         } = this.props;
 
@@ -75,8 +74,9 @@ class HousingForm extends Component {
                                 className="housing-form__input-number"
                                 onChange={this.handleInput} 
                                 value={number || ''} />
+                                <span className="housing-form__validation-message">{numberValidation}</span>
                         </div>
-                        <span className="housing-form__validation-message">{validationMessage}</span>
+                        <span className="housing-form__validation-message">{validationSummary}</span>
                         <div>
                             <button type="submit">Submit</button>
                         </div>
@@ -86,10 +86,17 @@ class HousingForm extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    loading: getLoading(state),
-    form: getForm(state)
-});
+const mapStateToProps = state => { 
+    const form = getForm(state);
+
+    return {
+        loading: getLoading(state),
+        number: form.number,
+        numberValidation: form.validation.number,
+        validationSummary: form.validation.summary,
+        form
+    }
+};
 
 const mapDispatchToProps = dispatch => ({
     updateForm: values => dispatch(updateForm(values)),

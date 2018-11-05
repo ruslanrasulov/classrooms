@@ -1,4 +1,5 @@
 import classroomsApi from '../utils/classroomsApi';
+import validateAuditorium from '../utils/validation/auditoriumValidator';
 import * as actionTypes from './actionTypes';
 
 export const fetchAuditoriums = (housingId) => dispatch => {
@@ -40,6 +41,13 @@ export const fetchDetailedInfoComplete = (detailedInfo) => ({
 });
 
 export const addAuditorium = (auditorium, callback) => dispatch => {
+    const validationMessage = validateAuditorium(auditorium);
+
+    if (!validationMessage.isValid) {
+        dispatch(setErrorMessage(validationMessage));
+        return;
+    }
+
     dispatch(addAuditoriumStart());
 
     classroomsApi.post(`api/housings/${auditorium.housingId}/auditoriums`, auditorium)
@@ -48,7 +56,7 @@ export const addAuditorium = (auditorium, callback) => dispatch => {
             callback();
         })
         .catch(error => {
-            dispatch(setErrorMessage(error.response.data));
+            dispatch(setErrorMessage({ summary: error.response.data }));
         });
 }
 
@@ -71,7 +79,7 @@ export const updateForm = form => ({
 
 export const setErrorMessage = message => ({
     type: actionTypes.AUDITORIUM_FORM_SET_ERROR_MESSAGE,
-    payload: { validationMessage: message }
+    payload: { validation: message }
 });
 
 export const fillForm = (housingId, auditoriumId) => dispatch => {
@@ -94,6 +102,13 @@ export const fillFormComplete = auditorium => ({
 });
 
 export const editAuditorium = (auditorium, callback) => dispatch => {
+    const validationMessage = validateAuditorium(auditorium);
+    
+    if (!validationMessage.isValid) {
+        dispatch(setErrorMessage(validationMessage));
+        return;
+    }
+
     dispatch(editAuditoriumStart());
 
     classroomsApi.put(`api/housings/${auditorium.housingId}/auditoriums/${auditorium.id}`, auditorium)
@@ -102,7 +117,7 @@ export const editAuditorium = (auditorium, callback) => dispatch => {
             callback();
         })
         .catch(error => {
-            dispatch(setErrorMessage(error.response.data));
+            dispatch(setErrorMessage({ summary: error.response.data }));
         });
 };
 

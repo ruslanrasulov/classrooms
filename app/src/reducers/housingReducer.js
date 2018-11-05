@@ -1,5 +1,9 @@
 import { combineReducers } from 'redux';
+import initialState from './initialState';
+import { getForm } from '../selectors/housingSelectors';
 import * as actionTypes from '../actions/actionTypes';
+
+const initialForm = getForm(initialState);
 
 const detailedInfoReducer = (state = [], action) => {  
     switch (action.type) {
@@ -34,24 +38,28 @@ const formReducer = (state = {}, action) => {
 
             return {
                 ...state,
-                ...form
+                ...form,
+                validation: initialForm.validation
             };
         }
         case actionTypes.HOUSING_FORM_ERROR_MESSAGE: {
-            const { message } = action.payload;
+            const { validation } = action.payload;
 
             return {
                 ...state,
-                validationMessage: message
+                validation
             };
         }
         case actionTypes.HOUSING_EDIT_FILL_FORM_COMPLETE: {
             const { housing } = action.payload; 
             
-            return housing;
+            return {
+                ...housing,
+                validation: initialForm.validation
+            };
         }
         case actionTypes.HOUSING_RESET_FORM: {
-            return { };
+            return initialForm;
         }
         default: {
             return state;
