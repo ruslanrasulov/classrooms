@@ -6,7 +6,9 @@ const Dotenv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
-    entry: './src/index.js',
+    entry: [
+        './src/index.js'
+    ],
     output: {
         path: outputPath,
         publicPath: '/',
@@ -26,6 +28,16 @@ const config = {
             {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader'],
+            },
+            {
+                test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        outputPath: 'fonts/'
+                    }
+                }]
             },
             { 
                 test: /\.(png|gif|woff|woff2|eot|ttf|svg)$/, 

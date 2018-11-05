@@ -8,8 +8,8 @@ import HousingsListDetailed from './../housingListDetailed';
 import AuditoriumsList from './../auditoriumsList';
 import AuditoriumsListDetailed from '../auditoriumsListDetailed';
 import 'reset-css';
-import 'font-awesome/css/font-awesome.min.css';
 import './_styles.scss';
+import 'font-awesome/css/font-awesome.min.css';
 
 export default (props) => {
     return (
@@ -25,7 +25,7 @@ export default (props) => {
                     <Route path="/housings/edit/:id" exact component={HousingForm} />} />
                     <Route path="/housings/:housingId/auditoriums" exact component={AuditoriumsList} />
                     <Route path="/housings" exact component={HousingList} />
-                    <Redirect to="/" />
+                    <Redirect to="/housings" />
                 </Switch>
             </main>
         </div>

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import spinner from './../../images/spinner.gif';
 import { getLoading } from '../../selectors/loadingSelectors';
 import { getForm } from '../../selectors/auditoriumSelectors';
+import './_styles.scss';
 
 class AuditoriumForm extends Component {
     componentDidMount = () => {
@@ -80,57 +81,59 @@ class AuditoriumForm extends Component {
                     <img src={spinner} alt="spinner" className="spinner"/> :
                     <form onSubmit={this.handleSubmit} className="auditorium-form">
                         <div>
-                            <label htmlFor="auditorium-number">Auditorium number:</label>
+                            <label className="label" htmlFor="auditorium-number">Auditorium number:</label>
                             <input 
                                 type="number" 
                                 name="number" 
                                 id="auditorium-number" 
-                                className="auditorium-form__input-number" 
+                                className="input" 
                                 value={number || ''}
                                 onChange={this.handleInput} />
-                            <span className="auditorium-form__validation-message">{numberValidation}</span>
+                            <span className="validation-message">{numberValidation}</span>
                         </div>
         
                         <div>
-                            <label htmlFor="capacity">Capacity:</label>
+                            <label className="label" htmlFor="capacity">Capacity:</label>
                             <input 
                                 type="number" 
                                 name="capacity" 
                                 id="auditorium-capacity" 
-                                className="auditorium-form__input-capacity"
+                                className="input"
                                 value={capacity || ''}
                                 onChange={this.handleInput} />
-                            <span className="auditorium-form__validation-message">{capacityValidation}</span>
+                            <span className="validation-message">{capacityValidation}</span>
                         </div>
 
                         <div>
-                            <label htmlFor="floor">Floor:</label>
+                            <label className="label" htmlFor="floor">Floor:</label>
                             <input 
                                 type="number" 
                                 name="floor" 
                                 id="auditorium-floor" 
-                                className="auditorium-form__input-floor"
+                                className="input"
                                 value={floor || ''}
                                 onChange={this.handleInput} />
-                            <span className="auditorium-form__validation-message">{floorValidation}</span>
+                            <span className="validation-message">{floorValidation}</span>
                         </div>
         
                         <div>
-                            <label htmlFor="type">Type:</label>
+                            <label className="label" htmlFor="type">Type:</label>
                             <select 
                                 name="type" 
                                 id="auditorium-type" 
-                                className="auditorium-form__input-type"
+                                className="input"
                                 value={type || 0}
                                 onChange={this.handleInput} >
                                 <option value="0">Lecture</option>
                                 <option value="1">Computer</option>
                                 <option value="2">Laboratory</option>
                             </select>
-                            <span className="auditorium-form__validation-message">{typeValidation}</span>
+                            <span className="validation-message">{typeValidation}</span>
                         </div>
-                        <span className="auditorium-form__validation-message">{validationSummary}</span>
-                        <button type="submit" className="auditorium-form__submit-btn">Submit</button>
+                        <div className="validation-summary">
+                            <span className="validation-message">{validationSummary}</span>
+                        </div>
+                        <button type="submit" className="btn auditorium-form__submit-btn">Submit</button>
                     </form>}
             </div>
         )

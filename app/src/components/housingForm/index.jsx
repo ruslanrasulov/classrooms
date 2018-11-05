@@ -66,19 +66,21 @@ class HousingForm extends Component {
                     <form className="housing-form" onSubmit={this.handleSubmit}>
                         <input type="hidden" name="housing-id" />
                         <div>
-                            <label htmlFor="housing-number">Number:</label>
+                            <label className="label" htmlFor="housing-number">Number:</label>
                             <input 
                                 type="number" 
                                 name="number" 
                                 id="housing-number" 
-                                className="housing-form__input-number"
+                                className="input"
                                 onChange={this.handleInput} 
                                 value={number || ''} />
-                                <span className="housing-form__validation-message">{numberValidation}</span>
+                                <span className="validation-message">{numberValidation}</span>
                         </div>
-                        <span className="housing-form__validation-message">{validationSummary}</span>
+                        <div className="validation-summary">
+                            <span className="validation-message">{validationSummary}</span>
+                        </div>
                         <div>
-                            <button type="submit">Submit</button>
+                            <button className="btn" type="submit">Submit</button>
                         </div>
                     </form>}
             </div>

@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { fetchAuditoriums, removeAuditorium } from './../../actions/auditoriumActions';
 import Modal from '../modal';
 import spinner from './../../images/spinner.gif';
-import './_styles.scss';
 import { getLoading } from '../../selectors/loadingSelectors';
 import typeMapping from '../../utils/auditoriumTypes.enum';
 import { getAuditoriumList } from '../../selectors/auditoriumSelectors';
+import './_styles.scss';
 
 class AuditoriumsList extends Component {
     state = {
@@ -64,9 +64,13 @@ class AuditoriumsList extends Component {
                     <img src={spinner} alt="spinner" className="spinner"/> : 
                     <div className="auditoriums">
                     <nav className="auditoriums__nav">
-                        <Link to={`/housings/${housingId}/auditoriums/add`} className="auditoriums__add-button">Add a auditorium</Link>
+                        <Link 
+                            to={`/housings/${housingId}/auditoriums/add`} 
+                            className="btn auditoriums__add-button">
+                            Add a auditorium
+                        </Link>
                     </nav>
-                    <table className="auditoriums__list">
+                    <table className="table__list">
                         <thead>
                             <tr>
                                 <th>Auditorium number</th>
@@ -84,8 +88,8 @@ class AuditoriumsList extends Component {
                                     <th>{a.floor}</th>
                                     <th>{typeMapping[a.type]}</th>
                                     <th>
-                                        <Link to={`/housings/${housingId}/auditoriums/${a.id}/edit`}>Edit</Link>
-                                        <button type="button" onClick={() => this.showModal(a.id)}>Remove</button>
+                                        <Link className="btn" to={`/housings/${housingId}/auditoriums/${a.id}/edit`}>Edit</Link>
+                                        <button className="btn" type="button" onClick={() => this.showModal(a.id)}>Remove</button>
                                     </th>
                                 </tr>
                             ))}

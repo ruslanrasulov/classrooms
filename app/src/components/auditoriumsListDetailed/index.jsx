@@ -18,7 +18,7 @@ class AuditoriumsListDetailed extends Component {
             <div>
                 {loading ?
                     <img src={spinner} alt="spinner" className="spinner"/> :
-                    <table>
+                    <table className="table__list">
                         <thead>
                             <tr>
                                 <th>Auditorium number</th>

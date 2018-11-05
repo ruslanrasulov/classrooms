@@ -31,7 +31,7 @@ class HousingListDetailed extends Component {
                 {loading ? 
                     <img src={spinner} alt="spinner" className="spinner"/> :
                     <div>
-                        <table>
+                        <table className="table__list">
                             <thead>
                                 <tr>
                                     <th>Housing number</th>

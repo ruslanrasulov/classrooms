@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { removeHousing, fetchHousings } from './../../actions/housingActions';
 import Modal from './../modal';
 import spinner from  './../../images/spinner.gif';
-import './_styles.scss';
 import { getLoading } from './../../selectors/loadingSelectors';
 import { getHousingList } from '../../selectors/housingSelectors';
+import './_styles.scss';
 
 class HousingList extends Component {
     state = {
@@ -47,8 +47,18 @@ class HousingList extends Component {
                         <nav className="housing-list__nav">
                             <Link 
                                 to="/housings/add" 
-                                className="housing-list__add-button">
+                                className="btn housing-list__button">
                                 Add a new housing
+                            </Link>
+                            <Link 
+                                to="/housings/auditoriums/detailed-info" 
+                                className="btn housing-list__button">
+                                Show auditoriums detailed info
+                            </Link>
+                            <Link 
+                                to={`/housings/detailed-info`} 
+                                className="btn housing-list__button">
+                                Show housings detailed info
                             </Link>
                         </nav>
                         <ul>
@@ -60,16 +70,16 @@ class HousingList extends Component {
                                     <div className="housing-list__item__buttons">
                                         <Link 
                                             to={`/housings/${housing.id}/auditoriums`} 
-                                            className="housing-list__item__button">
-                                            Detailed info
+                                            className="btn housing-list__item__button">
+                                            Show auditoriums
                                         </Link>
                                         <Link 
                                             to={`/housings/edit/${housing.id}`} 
-                                            className="housing-list__item__button">
+                                            className="btn housing-list__item__button">
                                             Edit
                                         </Link>
                                         <button 
-                                            className="housing-list__item__button" 
+                                            className="btn housing-list__item__button" 
                                             type="button" 
                                             onClick={() => this.showModal(housing.id)}>
                                             Remove

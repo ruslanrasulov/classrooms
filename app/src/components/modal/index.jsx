@@ -14,13 +14,13 @@ class Modal extends Component {
                             <span className="modal__header__title">{title}</span>
                             <i 
                                 onClick={onClose}
-                                className="modal__header__close-btn far fa-window-close"></i>
+                                className="modal__header__close-btn fa fa-window-close"></i>
                         </div>
                         <div className="modal__text">{text}</div>
                         <div className="modal__buttons">
                             <button 
                                 type="button" 
-                                className="modal__buttons__submit" 
+                                className="btn modal__buttons__submit" 
                                 onClick={onSubmit}>
                                 Submit
                             </button>

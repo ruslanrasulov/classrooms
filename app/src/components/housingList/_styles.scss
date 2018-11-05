@@ -5,18 +5,12 @@
 }
 
 .housing-list {
-    &__add-button {
+    &__button {
         display: block;
-        border-radius: 5px;
-        padding: 5px;
         margin-top: 10px;
         margin-bottom: 10px;
+        margin-left: 10px;
         float: right;
-        background-color: #4eb243;
-
-        &:hover {
-            background-color: #19ff00;
-        }
     }
 
     &__nav {
@@ -33,7 +27,7 @@
         margin-bottom: 5px;
 
         &:hover {
-            background-color: #e5e5e5;
+            background-color: #f1f1f1;
         }
 
         &__buttons {
@@ -50,11 +44,7 @@
         }
 
         &__button {
-            background-color: red;
-            border: 1px solid red;
-            font-size: 15px;
             margin-left: 15px;
-            padding: 5px;
         }
     }
 }

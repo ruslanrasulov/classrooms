@@ -30,6 +30,10 @@
             margin-right: 10px;
             color: black;
         }
+
+        &__close-btn:hover {
+            cursor: pointer;
+        }
     }
 
     &__text {
@@ -44,7 +48,6 @@
 
     &__buttons__submit {
         width: 70px;
-        height: 25px;
         border: 1px solid #e5e5e5;
         border-radius: 5px;
     }
