@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const outputPath = path.resolve(__dirname, 'dist');
+const Dotenv = require('dotenv-webpack');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -39,7 +40,11 @@ const config = {
             path: outputPath
         }),
         new webpack.NamedModulesPlugin(),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new Dotenv({
+            path: './.env',
+            systemvars: true
+        })
     ],
     resolve: {
         extensions: ['.js', '.jsx']

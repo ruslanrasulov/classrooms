@@ -1,10 +1,10 @@
-import axios from 'axios';
+import classroomsApi from '../utils/classroomsApi';
 import * as actionTypes from './actionTypes';
 
 export const fetchAuditoriums = (housingId) => dispatch => {
     dispatch(fetchAuditoriumsStart(housingId));
 
-    axios.get(`http://localhost:50505/api/housings/${housingId}/auditoriums`)
+    classroomsApi.get(`api/housings/${housingId}/auditoriums`)
         .then(({ data }) => {
             dispatch(fetchAuditoriumsComplete(data));
         })
@@ -23,7 +23,7 @@ export const fetchAuditoriumsComplete = auditoriumList => ({
 export const fetchDetailedInfo = () => dispatch => {
     dispatch(fetchDetailedInfoStart());
 
-    axios.get("http://localhost:50505/api/housings/auditoriums/detailed")
+    classroomsApi.get('api/housings/auditoriums/detailed')
         .then(({ data }) => {
             dispatch(fetchDetailedInfoComplete(data));
         })
@@ -42,7 +42,7 @@ export const fetchDetailedInfoComplete = (detailedInfo) => ({
 export const addAuditorium = (auditorium, callback) => dispatch => {
     dispatch(addAuditoriumStart());
 
-    axios.post(`http://localhost:50505/api/housings/${auditorium.housingId}/auditoriums`, auditorium)
+    classroomsApi.post(`api/housings/${auditorium.housingId}/auditoriums`, auditorium)
         .then(result => {
             dispatch(addAuditoriumComplete());
             callback();
@@ -77,7 +77,7 @@ export const setErrorMessage = message => ({
 export const fillForm = (housingId, auditoriumId) => dispatch => {
     dispatch(fillFormStart());
 
-    axios.get(`http://localhost:50505/api/housings/${housingId}/auditoriums/${auditoriumId}`)
+    classroomsApi.get(`api/housings/${housingId}/auditoriums/${auditoriumId}`)
         .then(result => {
             dispatch(fillFormComplete(result.data));
         })
@@ -96,7 +96,7 @@ export const fillFormComplete = auditorium => ({
 export const editAuditorium = (auditorium, callback) => dispatch => {
     dispatch(editAuditoriumStart());
 
-    axios.put(`http://localhost:50505/api/housings/${auditorium.housingId}/auditoriums/${auditorium.id}`, auditorium)
+    classroomsApi.put(`api/housings/${auditorium.housingId}/auditoriums/${auditorium.id}`, auditorium)
         .then(result => {
             dispatch(editAuditoriumComplete());
             callback();
@@ -115,7 +115,7 @@ export const editAuditoriumComplete = () => ({
 });
 
 export const removeAuditorium = (housingId, auditoriumId) => dispatch => {
-    axios.delete(`http://localhost:50505/api/housings/${housingId}/auditoriums/${auditoriumId}`)
+    classroomsApi.delete(`api/housings/${housingId}/auditoriums/${auditoriumId}`)
         .then(result => {
             dispatch(fetchAuditoriums(housingId));
         })

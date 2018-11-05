@@ -1,10 +1,10 @@
-import axios from 'axios';
+import classroomsApi from '../utils/classroomsApi';
 import * as actionTypes from './actionTypes';
 
 export const fetchHousings = () => dispatch => {
     dispatch(fetchHousingsStart());
 
-    axios.get('http://localhost:50505/api/housings')
+    classroomsApi.get('api/housings')
         .then((housings) => {
             dispatch(fetchHousingsComplete(housings.data));
         })
@@ -23,7 +23,7 @@ export const fetchHousingsComplete = (housingList) => ({
 export const fetchDetailedInfo = () => dispatch => {
     dispatch(fetchDetailedInfoStart());
 
-    axios.get("http://localhost:50505/api/housings/detailed")
+    classroomsApi.get('api/housings/detailed')
         .then(({ data }) => {
             dispatch(fetchDetailedInfoComplete(data));
         })
@@ -40,7 +40,7 @@ export const fetchDetailedInfoComplete = (detailedInfo) => ({
 });
 
 export const removeHousing = (id) => dispatch => {
-    axios.delete(`http://localhost:50505/api/housings/${id}`)
+    classroomsApi.delete(`api/housings/${id}`)
         .then(result => {
             if (result.status === 200) {
                 dispatch(fetchHousings());
@@ -60,7 +60,7 @@ export const updateForm = form => ({
 });
 
 export const addHousing = (housing, callback) => dispatch => {
-    axios.post('http://localhost:50505/api/housings/', housing)
+    classroomsApi.post('api/housings/', housing)
         .then(result => {
             callback();
         })
@@ -72,7 +72,7 @@ export const addHousing = (housing, callback) => dispatch => {
 export const editHousing = (housing, callback) => dispatch => {
     dispatch(editHousingStart());
 
-    axios.put(`http://localhost:50505/api/housings/${housing.id}`, housing)
+    classroomsApi.put(`api/housings/${housing.id}`, housing)
         .then(result => {
             dispatch(editHousingComplete());
             callback();
@@ -98,7 +98,7 @@ export const setErrorMessage = message => ({
 export const fillForm = id => dispatch => {
     dispatch(fillFormStart());
 
-    axios.get(`http://localhost:50505/api/housings/${id}`)
+    classroomsApi.get(`api/housings/${id}`)
         .then(result => {
             dispatch(fillFormComplete(result.data));
         })
