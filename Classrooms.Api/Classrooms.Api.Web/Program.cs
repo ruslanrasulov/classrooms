@@ -14,7 +14,7 @@ namespace Classrooms.Api.Web
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
             var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            Console.WriteLine(environmentName);
+
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{environmentName}.json", optional: true)
