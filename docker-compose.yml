@@ -1,0 +1,30 @@
+version: '3.6'
+services: 
+  react-ui:
+    image: ${DOCKER_REGISTRY:-}react-ui:${IMAGE_VERSION:-dev}
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: 'react-ui'
+    ports:
+      - '3000:80'
+    depends_on:
+      - 'classrooms-api'
+  classrooms-api:
+    container_name: 'classrooms-api'
+    image: ${DOCKER_REGISTRY:-}classrooms-api:${IMAGE_VERSION:-dev}
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+    build:
+      context: .
+      dockerfile: Classrooms.Api/Classrooms.Api.Web/Dockerfile
+    ports:
+      - '50505:80'
+    depends_on:
+      - 'mongodb'
+    links:
+      - 'mongodb'
+  mongodb:
+    image: mongo:latest
+    ports:
+      - '27017:27017'

@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore;
+﻿using System;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace Classrooms.Api.Web
 {
@@ -10,8 +11,19 @@ namespace Classrooms.Api.Web
             CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        {
+            var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            Console.WriteLine(environmentName);
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{environmentName}.json", optional: true)
+                .AddEnvironmentVariables()
+                .Build();
+
+            return new WebHostBuilder()
+                .UseConfiguration(configuration)
                 .UseStartup<Startup>();
+        }
     }
 }
