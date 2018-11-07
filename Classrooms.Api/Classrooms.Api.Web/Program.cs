@@ -16,12 +16,13 @@ namespace Classrooms.Api.Web
             var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
             var configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{environmentName}.json", optional: true)
                 .AddEnvironmentVariables()
                 .Build();
 
             return new WebHostBuilder()
+                .UseKestrel()
                 .UseConfiguration(configuration)
                 .UseStartup<Startup>();
         }
