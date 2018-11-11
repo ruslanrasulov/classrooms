@@ -1,5 +1,7 @@
+
 const webpack = require('webpack');
 const path = require('path');
+
 const outputPath = path.resolve(__dirname, 'dist');
 const Dotenv = require('dotenv-webpack');
 
@@ -20,6 +22,14 @@ const config = {
                 test: /\.jsx?$/,
                 exclude: '/node_modules/',
                 use: ['babel-loader']
+            },
+            {
+                test: /\.(jsx?)$/,
+                loader: 'eslint-loader',
+                exclude: '/node_modules',
+                options: {
+                  configFile: '.eslintrc.js'
+                }
             },
             {
                 test: /\.(scss|sass)/,

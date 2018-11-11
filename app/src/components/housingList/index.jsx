@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { removeHousing, fetchHousings } from './../../actions/housingActions';
-import Modal from './../modal';
-import Spinner from  './../spinner';
-import { getLoading } from './../../selectors/loadingSelectors';
+import { removeHousing, fetchHousings } from '../../actions/housingActions';
+import Modal from '../modal';
+import Spinner from  '../spinner';
+import { getLoading } from '../../selectors/loadingSelectors';
 import { getHousingList } from '../../selectors/housingSelectors';
 import './_styles.scss';
 
@@ -98,8 +98,8 @@ class HousingList extends Component {
                 }
             </div>
         );
-    };
-};
+    }
+}
 
 const mapStateToProps = state => ({
     housings: getHousingList(state),
@@ -113,5 +113,4 @@ const mapDispatchToProps = dispatch => ({
 
 export default connect(
     mapStateToProps, 
-    mapDispatchToProps)
-(HousingList);
+    mapDispatchToProps)(HousingList);

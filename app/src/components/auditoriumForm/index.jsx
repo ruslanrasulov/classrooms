@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Spinner from '../spinner';
 import AuditoriumFormElement from '../auditoriumFormElement';
 import { resetForm, fillForm } from '../../actions/auditoriumActions';
-import { connect } from 'react-redux';
 import { getLoading } from '../../selectors/loadingSelectors';
 import './_styles.scss';
 
 class AuditoriumForm extends Component {
     componentDidMount = () => {
         const { fetchAuditorium, reset } = this.props;
-
         if (this.isEditMode) {
             fetchAuditorium(this.housingId, this.auditoriumId);
         } else {

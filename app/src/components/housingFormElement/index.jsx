@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getForm } from '../../selectors/housingSelectors';
-import { 
-    updateForm, 
-    addHousing, 
-    editHousing 
-} from '../../actions/housingActions';
 import { withRouter } from 'react-router-dom';
+import { getForm } from '../../selectors/housingSelectors';
+import { updateForm, addHousing, editHousing } from '../../actions/housingActions';
 
 class HousingFormElement extends Component {
     handleInput = e => {
@@ -66,7 +62,7 @@ class HousingFormElement extends Component {
             </form>
         );
     }
-};
+}
 
 const mapStateToProps = state => {
     const form = getForm(state);

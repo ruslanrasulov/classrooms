@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchAuditoriums, removeAuditorium } from './../../actions/auditoriumActions';
+import { fetchAuditoriums, removeAuditorium } from '../../actions/auditoriumActions';
 import Modal from '../modal';
 import Spinner from '../spinner';
 import { getLoading } from '../../selectors/loadingSelectors';
@@ -106,7 +106,7 @@ class AuditoriumsList extends Component {
             </div>
         );
     }
-};
+}
 
 const mapStateToProps = state => ({
     loading: getLoading(state),
@@ -120,5 +120,5 @@ const mapDispatchToProps = dispatch => ({
 
 export default connect(
     mapStateToProps,
-    mapDispatchToProps)
-(AuditoriumsList);
+    mapDispatchToProps
+)(AuditoriumsList);

@@ -18,7 +18,8 @@ class AuditoriumFormElement extends Component {
         const {
             addAuditorium,
             editAuditorium,
-            form, 
+            form,
+            isEditMode,       
             match: { params: { housingId, id } },
             history: { push }
         } = this.props;
@@ -26,7 +27,7 @@ class AuditoriumFormElement extends Component {
 
         e.preventDefault();
 
-        if (this.isEditForm) {
+        if (isEditMode) {
             editAuditorium({ ...form, housingId, id }, callback);
         } else {
             addAuditorium({ ...form, housingId }, callback);
@@ -102,7 +103,7 @@ class AuditoriumFormElement extends Component {
             </form>
         );
     }    
-};
+}
 
 const mapStateToProps = state => {
     const form = getForm(state);

@@ -64,7 +64,7 @@ const formReducer = (state = {}, action) => {
         default: {
             return state;
         }
-    };
+    }
 };
 
 export default combineReducers({

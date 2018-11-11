@@ -1,17 +1,17 @@
 import React from 'react';
-import Header from './../header';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import AuditoriumForm from './../auditoriumForm';
-import HousingForm from './../housingForm';
-import HousingList from './../housingList';
-import HousingsListDetailed from './../housingListDetailed';
-import AuditoriumsList from './../auditoriumsList';
+import Header from '../header';
+import AuditoriumForm from '../auditoriumForm';
+import HousingForm from '../housingForm';
+import HousingList from '../housingList';
+import HousingsListDetailed from '../housingListDetailed';
+import AuditoriumsList from '../auditoriumsList';
 import AuditoriumsListDetailed from '../auditoriumsListDetailed';
 import 'reset-css';
 import './_styles.scss';
 import 'font-awesome/css/font-awesome.min.css';
 
-export default (props) => {
+const App = () => {
     return (
         <div>
             <Header />
@@ -22,7 +22,7 @@ export default (props) => {
                     <Route path="/housings/auditoriums/detailed-info" exact component={AuditoriumsListDetailed} />
                     <Route path="/housings/detailed-info" exact component={HousingsListDetailed} />
                     <Route path="/housings/add" exact component={HousingForm} />
-                    <Route path="/housings/edit/:id" exact component={HousingForm} />} />
+                    <Route path="/housings/edit/:id" exact component={HousingForm} />
                     <Route path="/housings/:housingId/auditoriums" exact component={AuditoriumsList} />
                     <Route path="/housings" exact component={HousingList} />
                     <Redirect to="/housings" />
@@ -31,3 +31,5 @@ export default (props) => {
         </div>
     );
 };
+
+export default App;

@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Spinner from '../spinner';
 import HousingFormElement from '../housingFormElement';
-import { connect } from 'react-redux';
 import { getLoading } from '../../selectors/loadingSelectors';
-import { 
-    fillForm, 
-    resetForm,
-} from '../../actions/housingActions';
+import { fillForm, resetForm } from '../../actions/housingActions';
 
 class HousingForm extends Component {
     componentDidMount() {

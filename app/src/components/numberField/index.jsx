@@ -1,13 +1,14 @@
 import React from 'react';
 import './_styles.scss';
 
-export default props => (
+const NumberField = props => (
     <input 
         type="number"
         name={props.name}
         id={props.id}
         className="input"
-        value={props.value}
-        defaultValue="" 
+        value={props.value || ''}
         onChange={props.onChange} />
 );
+
+export default NumberField;

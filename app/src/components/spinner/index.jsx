@@ -1,6 +1,8 @@
 import React from 'react';
 import spinner from '../../images/spinner.gif';
 
-export default () => (
+const Spinner = () => (
     <img src={spinner} alt="spinner" className="spinner"/>
 );
+
+export default Spinner;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchDetailedInfo } from './../../actions/auditoriumActions';
+import { fetchDetailedInfo } from '../../actions/auditoriumActions';
 import Spinner from '../spinner';
 import { getLoading } from '../../selectors/loadingSelectors';
 import typeMapping from '../../utils/auditoriumTypes.enum';
@@ -30,7 +30,7 @@ class AuditoriumsListDetailed extends Component {
                         </thead>
                         <tbody>
                             {detailedInfo.map(a => (
-                                <tr key={a.number}>
+                                <tr key={a.number + '' + a.housingNumber}>
                                     <th>{a.number}</th>
                                     <th>{a.housingNumber}</th>
                                     <th>{a.floor}</th>

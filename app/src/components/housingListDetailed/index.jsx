@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchDetailedInfo } from './../../actions/housingActions';
+import { fetchDetailedInfo } from '../../actions/housingActions';
 import Spinner from  '../spinner';
 import { getLoading } from '../../selectors/loadingSelectors';
 import { getDetailedInfo } from '../../selectors/housingSelectors';
