@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { removeHousing, fetchHousings } from './../../actions/housingActions';
 import Modal from './../modal';
-import spinner from  './../../images/spinner.gif';
+import Spinner from  './../spinner';
 import { getLoading } from './../../selectors/loadingSelectors';
 import { getHousingList } from '../../selectors/housingSelectors';
 import './_styles.scss';
@@ -42,7 +42,7 @@ class HousingList extends Component {
         return (
             <div className="housing-list">
                 {loading ? 
-                    <img src={spinner} alt="spinner" className="spinner"/> :
+                    <Spinner /> :
                     <div>
                         <nav className="housing-list__nav">
                             <Link 

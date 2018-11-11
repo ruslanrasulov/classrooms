@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchDetailedInfo } from './../../actions/housingActions';
-import spinner from  './../../images/spinner.gif';
+import Spinner from  '../spinner';
 import { getLoading } from '../../selectors/loadingSelectors';
 import { getDetailedInfo } from '../../selectors/housingSelectors';
 
@@ -29,7 +29,7 @@ class HousingListDetailed extends Component {
         return (
             <div>
                 {loading ? 
-                    <img src={spinner} alt="spinner" className="spinner"/> :
+                    <Spinner /> :
                     <div>
                         <table className="table__list">
                             <thead>

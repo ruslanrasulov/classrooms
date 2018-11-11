@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchDetailedInfo } from './../../actions/auditoriumActions';
-import spinner from  './../../images/spinner.gif';
+import Spinner from '../spinner';
 import { getLoading } from '../../selectors/loadingSelectors';
 import typeMapping from '../../utils/auditoriumTypes.enum';
 import { getDetailedInfo } from '../../selectors/auditoriumSelectors';
@@ -17,7 +17,7 @@ class AuditoriumsListDetailed extends Component {
         return (
             <div>
                 {loading ?
-                    <img src={spinner} alt="spinner" className="spinner"/> :
+                    <Spinner /> :
                     <table className="table__list">
                         <thead>
                             <tr>

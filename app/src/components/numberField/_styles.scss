@@ -1,0 +1,13 @@
+.input {
+    display: block;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    display: block;
+    width: 100%;
+
+    -ms-box-sizing:content-box;
+    -moz-box-sizing:content-box;
+    -webkit-box-sizing:content-box; 
+    box-sizing:content-box;
+}

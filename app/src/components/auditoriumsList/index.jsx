@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchAuditoriums, removeAuditorium } from './../../actions/auditoriumActions';
 import Modal from '../modal';
-import spinner from './../../images/spinner.gif';
+import Spinner from '../spinner';
 import { getLoading } from '../../selectors/loadingSelectors';
 import typeMapping from '../../utils/auditoriumTypes.enum';
 import { getAuditoriumList } from '../../selectors/auditoriumSelectors';
@@ -61,7 +61,7 @@ class AuditoriumsList extends Component {
         return (
             <div>
                 {loading ? 
-                    <img src={spinner} alt="spinner" className="spinner"/> : 
+                    <Spinner /> : 
                     <div className="auditoriums">
                     <nav className="auditoriums__nav">
                         <Link 

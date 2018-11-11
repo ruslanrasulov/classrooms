@@ -6,6 +6,7 @@ const loadingReducer = (state = true, action) => {
     switch (actionType) {
         case actionTypes.AUDITORIUM_FORM_RESET:
         case actionTypes.AUDITORIUM_ADD_COMPLETE:
+        case actionTypes.AUDITORIUM_FORM_SET_ERROR_MESSAGE:
         case actionTypes.HOUSING_FORM_ERROR_MESSAGE:
         case actionTypes.HOUSING_EDIT_FILL_FORM_COMPLETE:
         case actionTypes.HOUSING_RESET_FORM:
